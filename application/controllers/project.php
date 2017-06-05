@@ -83,9 +83,9 @@
 				$data["projects_table"] = $projects_result->result();
 				$data["pagination"] = $this->pagination->create_links();
 
-				$this->load->view('header');
-				$this->load->view('display_projects',$data);
-				$this->load->view('footer');
+				$this->load->view('template/header');
+				$this->load->view('project/display_projects',$data);
+				$this->load->view('template/footer');
 			}
 			else
 			{
@@ -198,9 +198,9 @@
 			
 			$data['title'] = 'Project Requirements';
 			$data['norecord'] = '';
-			$this->load->view('header');
-			$this->load->view('project_requirements',$data);
-			$this->load->view('footer');
+			$this->load->view('template/header');
+			$this->load->view('project/project_requirements',$data);
+			$this->load->view('template/footer');
 		}
 		
 		public function add_project()

@@ -146,9 +146,9 @@
 				$data["users_table"] = $this->m_user->get_all_users($config["per_page"], $page, $team_id, '');
 				$data["pagination"] = $this->pagination->create_links();
 
-				$this->load->view('header');
-				$this->load->view('display_users',$data);
-				$this->load->view('footer');
+				$this->load->view('template/header');
+				$this->load->view('user/display_users',$data);
+				$this->load->view('template/footer');
 			}
 			else
 			{

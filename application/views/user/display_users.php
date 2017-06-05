@@ -1,21 +1,52 @@
 <title>Display All Users</title>
 
 <body>
-
-		
-	<?php $capability = array ('' => 'All', '1' => 'ETL', '2' => '.NET', '3' => 'C++', '4' => 'Java', '5' => 'PHP', '6' => 'PL/SQL', '7' => 'System Test' ); ?>
 	
-	<?php $user_type = array ('' => 'All', 'User' => 'User', 'Lead' => 'Lead'); ?>
+	<?php $capability = array ('' => 'All',
+							   '1' => 'ETL',
+							   '2' => '.NET',
+							   '3' => 'C++',
+							   '4' => 'Java',
+							   '5' => 'PHP',
+							   '6' => 'PL/SQL',
+							   '7' => 'System Test' ); ?>
 	
-	
+	<?php $user_type = array ('' => 'All',
+							  'User' => 'User',
+							  'Lead' => 'Lead'); ?>
 	
 	<div class="container">
-	<?php if($this->session->flashdata('message')){ ?> <div class="alert alert-success text-center"> <?php echo $this->session->flashdata('message'); ?> </div> <?php } ?>
 		<div class="row">
-			<div class="small col-md-3 well">
+			<div class="col-md-12">
+				<?php if($this->session->flashdata('message')){ ?> <div class="alert alert-success text-center"> <?php echo $this->session->flashdata('message'); ?> </div> <?php } ?>
+			</div>
+		</div>
 		
-				<?php if ($this->session->userdata('is_admin') != 1) { ?> <div class="hidden"> <?php } else { ?> <div class="show"> <?php } ?>
+		<div class="row">
+			<div class="col-md-12">
+				<!--addPRModal Placeholder-->
+					<div style='margin-right: 15px; margin-lef:10px;'>
+					<?php echo form_button('Add New Resource','Add New Resource','class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#addUserModal"'); ?>
+					<?php $this->view('/modals/add_user');?>
+					</div>
+				<!--end of addPRModal Placeholder-->
 				
+				<div style='margin-left: 100px;'>
+				<?php echo anchor('user/add_user','Export To Excel', "class='btn btn-success btn-sm pull-right'"); ?>
+				</div>
+			</div>
+				
+				<div>
+					<br/>
+					<br/>
+				</div>
+		
+		</div>
+			
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="small col-md-3">
 					<?php echo form_open('user/filter'); ?></p>
 						<label><span class="text-danger"><b></b></span> Capability</label><br />
 						<?php echo form_dropdown('capability_search', $capability, '', 'class="form-control form-control-lg"'); ?> 
@@ -24,48 +55,15 @@
 						<label><span class="text-danger"><b></b></span> Type</label><br />
 						<?php echo form_dropdown('usertype_search', $user_type, '', 'class="form-control form-control-lg"'); ?> 
 						<br />
-	
+		
 						<?php echo form_submit('submit','Filter', "class='btn btn-block btn-warning'");?>
-						
+							
 					<?php echo form_close(); ?>
-					
+						
 					<hr />
-					
-					
 				</div>
-			</div>
-			
-			<!-- START additional div -->
-			
-			
-			<div class="col-md-3">
-			
-			</div>
-			
-			<div class="col-md-3">
-			<?php echo anchor('user/add_user','Export To Excel', "class='btn btn-success btn-sm'"); ?>
-			
-			<!--addPRModal Placeholder-->
-				<!--<button type="button" class="class='btn btn-primary btn-sm pull-left" data-toggle="modal" data-target="#addUserModal">Add New Resource</button>-->
-				<?php echo form_button('Add New Resource','Add New Resource','class="btn btn-info btn-sm pull-left" data-toggle="modal" data-target="#addUserModal"'); ?>
-				<?php $this->view('/modals/add_user');?>
-			<!--end of addPRModal Placeholder-->
-			
-			</div>
-			
-			<div class="col-md-3">
-			<?php //echo form_open('user/batch_reset/'.$uri); ?>
-			
-			</div>
-			
-			<!-- END -->
-			
-			<div class="col-md-9">
-				<br/>
-			</div>
-			
-			
-			<div class="col-md-9">
+				
+				<div class="col-md-9">
 				<table class= "table small">
 					<thead>
 						<tr style="background-color:#333;color:#fff;">
@@ -122,13 +120,14 @@
 						</tbody>
 					<?php endforeach;?>
 					
-					
-					
 				</table>
 				<div style="text-align:center">
 					<?php if($pagination != false ) { echo $pagination; }	?>
 				</div>
+				</div>
 			</div>
+
+			
 		</div>
 	</div>
 	
