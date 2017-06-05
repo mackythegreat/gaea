@@ -1,2 +1,2 @@
-# gaea
-Reconstructing "project" architecture 
+# gqm
+quality manager
