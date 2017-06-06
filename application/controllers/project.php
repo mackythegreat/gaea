@@ -27,17 +27,19 @@
 			}
 		}
 		
-		public function update_projects($p_id=0)
+		public function update_project($p_id=0)
 		{
 			if($this->submit_validate()===FALSE)
 			{
-				$row = $this->m_user->get_project_details($p_id);			
-				$data['project_detail'] = $row->result();				
-				return $this->load->view('update_project',$data);
+				$row = $this->m_project->get_project_details($p_id);			
+				$data['project_details'] = $row->result();				
+				$this->load->view('template/header',$data);
+				$this->load->view('project/update_project',$data);
+				$this->load->view('template/footer',$data);
 			}
 			
-			else{
-				
+			else
+			{
 				$p_id = $this->input->post('p_id');		
 				
 				// Update Project
@@ -61,8 +63,8 @@
 				$ee['EE_DOC_LINK'] = $this->input->post('ee_doc_link');
 				$this->m_project->update_ee($p_id,$ee);
 			
-				$this->session->set_flashdata('message','User ID: '.$user_id.' has been updated');
-				redirect('cuser/displayUsers');	
+				$this->session->set_flashdata('message',$data['P_NAME'].' has been updated');
+				redirect('project/display_projects');	
 			}
 		}
 		

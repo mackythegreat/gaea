@@ -27,6 +27,28 @@
 			}
 		}
 		
+		public function get_project_details($id)
+		{	
+			$this->db->select('tb_project.p_id as proj_id, tb_project.p_name as proj_name, capability.team as team, tb_project.p_start_dt as start_date, 
+							   tb_project.p_end_dt as end_date, tb_project.p_status as status, tb_tech_design.TD_DOC_NAME, tb_tech_design.TD_DOC_LINK, tb_tech_design.TD_VERSION,
+							   tb_entry_exit.ee_doc_name, tb_entry_exit.ee_doc_link');
+			$this->db->from('tb_project');
+			$this->db->join('capability', 'tb_project.p_team_id = capability.id');
+			$this->db->join('tb_tech_design', 'tb_project.p_id = tb_tech_design.p_id');
+			$this->db->join('tb_entry_exit', 'tb_project.p_id = tb_entry_exit.p_id');
+			$this->db->where('tb_project.p_id',$id);
+			$query = $this->db->get();
+			
+			if($query->num_rows() > 0)
+			{
+				return $query;
+			}
+			else
+			{
+				return FALSE;	
+			}					
+		}
+		
 		
 		public function get_all_projects($limit, $start, $capabiltity_search, $status_search) // used
 		{
@@ -219,6 +241,25 @@
 		{
 			$this->db->where('proj_req_id',$id);
 			$this->db->update('project_req',$data);
+		}
+		
+		/* Update Project */
+		public function update_project($id, $data) 
+		{
+			$this->db->where('p_id',$id);
+			$this->db->update('tb_project',$data);
+		}
+		
+		public function update_td($id, $data)
+		{
+			$this->db->where('p_id',$id);
+			$this->db->update('tb_tech_design',$data);
+		}
+		
+		public function update_ee($id, $data)
+		{
+			$this->db->where('p_id',$id);
+			$this->db->update('tb_entry_exit',$data);
 		}
 	}
 ?>
