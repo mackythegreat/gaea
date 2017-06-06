@@ -8,7 +8,7 @@
 			$this->load->database();	
 		}
 		
-		public function get_p_id()
+		public function get_p_id() // used
 		{	
 			$this->db->select_max('P_ID');
 			$this->db->from('tb_project');
@@ -28,7 +28,7 @@
 		}
 		
 		
-		public function get_all_projects($limit, $start, $capabiltity_search, $status_search) 
+		public function get_all_projects($limit, $start, $capabiltity_search, $status_search) // used
 		{
 			if ($capabiltity_search!='')
 			{
@@ -36,14 +36,18 @@
             }
 			if ($status_search!='')
 			{
-				$this->db->where("(project.status LIKE '%$status_search%')");
+				$this->db->where("(tb_project.p_status LIKE '%$status_search%')");
             }
 			
 			$this->db->limit($limit, $start);
-			$this->db->select('project.proj_id as proj_id, project.proj_name as proj_name, capability.team as team, project.start_date as start_date, project.end_date as end_date, project.status as status');
-			$this->db->from('project');
-			$this->db->join('capability', 'project.capability_id = capability.id');
-			$this->db->order_by("project.proj_id", "desc"); 
+			$this->db->select('tb_project.p_id as proj_id, tb_project.p_name as proj_name, capability.team as team, tb_project.p_start_dt as start_date, 
+							   tb_project.p_end_dt as end_date, tb_project.p_status as status, tb_tech_design.TD_DOC_NAME, tb_tech_design.TD_DOC_LINK, tb_tech_design.TD_VERSION,
+							   tb_entry_exit.ee_doc_name, tb_entry_exit.ee_doc_link');
+			$this->db->from('tb_project');
+			$this->db->join('capability', 'tb_project.p_team_id = capability.id');
+			$this->db->join('tb_tech_design', 'tb_project.p_id = tb_tech_design.p_id');
+			$this->db->join('tb_entry_exit', 'tb_project.p_id = tb_entry_exit.p_id');
+			$this->db->order_by("tb_project.p_id", "desc"); 
 			
 			$query = $this->db->get();
 			
@@ -76,7 +80,7 @@
 		
 		
 		
-		public function insert_project($data)
+		public function insert_project($data) // used
 		{
 			if($this->db->insert('tb_project', $data))
 			{
@@ -85,7 +89,7 @@
 				return FALSE;
 		}
 		
-		public function insert_ee($data)
+		public function insert_ee($data) //used
 		{
 			if($this->db->insert('tb_entry_exit', $data))
 			{
@@ -94,7 +98,7 @@
 				return FALSE;
 		}
 		
-		public function insert_td($data)
+		public function insert_td($data) //used
 		{
 			if($this->db->insert('tb_tech_design', $data))
 			{

@@ -27,20 +27,59 @@
 			}
 		}
 		
+		public function update_projects($p_id=0)
+		{
+			if($this->submit_validate()===FALSE)
+			{
+				$row = $this->m_user->get_project_details($p_id);			
+				$data['project_detail'] = $row->result();				
+				return $this->load->view('update_project',$data);
+			}
+			
+			else{
+				
+				$p_id = $this->input->post('p_id');		
+				
+				// Update Project
+				$data['P_ID'] = $p_id;
+				$data['P_NAME'] = $this->input->post('p_name');
+				$data['P_TEAM_ID'] = $this->input->post('p_team_id');
+				$data['P_START_DT'] = $this->input->post('p_start_dt');
+				$data['P_END_DT'] = $this->input->post('p_end_dt');
+				$data['P_STATUS'] = $this->input->post('p_status');
+				$this->m_project->update_project($p_id,$data);
+				
+				// Update Technical Design
+				$td['P_ID'] = $p_id;
+				$td['TD_DOC_NAME'] = $this->input->post('td_doc_name');
+				$td['TD_DOC_LINK'] = $this->input->post('td_doc_link');
+				$this->m_project->update_td($p_id,$td);
+				
+				// Update Entry-Exit
+				$ee['P_ID'] = $p_id;
+				$ee['EE_DOC_NAME'] = $this->input->post('ee_doc_name');
+				$ee['EE_DOC_LINK'] = $this->input->post('ee_doc_link');
+				$this->m_project->update_ee($p_id,$ee);
+			
+				$this->session->set_flashdata('message','User ID: '.$user_id.' has been updated');
+				redirect('cuser/displayUsers');	
+			}
+		}
+		
 		public function display_projects() 
 		{
-			/*if(($this->session->userdata('user_type') == 'Lead') || ($this->session->userdata('is_admin') != 0) || ($this->session->userdata('is_qa_rep') != 0))
+			if(($this->session->userdata('user_type') == 'Lead') || ($this->session->userdata('is_admin') != 0) || ($this->session->userdata('is_qa_rep') != 0))
 			{				
 				$config = array();				
 				$config['base_url'] = site_url('project/display_projects');
 
 				if ($this->session->userdata('is_admin') == 1)
 				{
-					$config['total_rows'] = $this->db->count_all('project');
+					$config['total_rows'] = $this->db->count_all('tb_project');
 				}
 				else
 				{
-					$query = $this->db->where('team_id', $this->session->userdata('team_id'))->get('project');
+					$query = $this->db->where('p_team_id', $this->session->userdata('team_id'))->get('tb_project');
 					$config['total_rows'] = $query->num_rows();
 				}
 				
@@ -83,19 +122,15 @@
 				$data["projects_table"] = $projects_result->result();
 				$data["pagination"] = $this->pagination->create_links();
 
-				$this->load->view('header');
-				$this->load->view('display_projects',$data);
-				$this->load->view('footer');
+				$this->load->view('template/header');
+				$this->load->view('project/display_projects',$data);
+				$this->load->view('template/footer');
 			}
 			else
 			{
 				$this->session->set_flashdata('message','You are not allowed to view this page!');
 				redirect('user/user_dashboard');
-			}*/
-			
-			$this->load->view('template/header');
-			$this->load->view('project/display_projects');
-			$this->load->view('template/footer');
+			}
 		}
 		
 		public function filter()

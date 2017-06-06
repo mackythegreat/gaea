@@ -4,7 +4,7 @@
 	<title>Change Password</title>	
 </head>
 <body>
-			<?php $this->load->view('header'); ?>
+			
 		<?php foreach($user_detail as $item):?>
 			<?php echo form_open_multipart('user/change_password/'.$item->eid); ?>
 						

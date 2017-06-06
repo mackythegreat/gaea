@@ -226,7 +226,7 @@
 				redirect('user/user_dashboard');
 			}
 		}
-		
+				
 		public function change_password()
 		{
 			$id = $this->session->userdata('id');
@@ -235,7 +235,10 @@
 			{
 				$row = $this->m_user->get_user_details($id);
 				$data['user_detail'] = $row->result();
-				return $this->load->view('change_user_password',$data);
+				
+				$this->load->view('template/header');
+				$this->load->view('user/change_user_password',$data);
+				$this->load->view('template/footer');
 			}
 			else
 			{

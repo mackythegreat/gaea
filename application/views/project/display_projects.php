@@ -56,10 +56,7 @@
 							<th colspan = 3  class="text-center">ACTION</th>
 						</tr>
 					</thead>
-					<?php //$count = $this->m_user->get_all_users($offset,$page,$search); ?>
-					<?php //if($count->num_rows()>0):?>
 				
-
 					<?php foreach ($projects_table as $item):?>
 					<tbody>
 						<tr>
@@ -83,7 +80,6 @@
 					</tbody>
 					<?php endforeach;?>
 					<?php form_close(); ?>
-					<?php //endif; ?>
 				</table>
 				<div style="text-align:center">
 					<?php if($pagination != false ) { echo $pagination; }	?>
