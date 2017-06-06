@@ -215,9 +215,9 @@
 				$data['pagination'] = $this->pagination->create_links();
 
 				//load view
-				$this->load->view('header');
-				$this->load->view('display_users',$data);
-				$this->load->view('footer');
+				$this->load->view('template/header');
+				$this->load->view('user/display_users',$data);
+				$this->load->view('template/footer');
 				
 			}
 			else

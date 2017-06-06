@@ -8,6 +8,26 @@
 			$this->load->database();	
 		}
 		
+		public function get_p_id()
+		{	
+			$this->db->select_max('P_ID');
+			$this->db->from('tb_project');
+			$query = $this->db->get();
+
+			if($query->num_rows() > 0)
+			{
+				foreach ($query->result() as $row)
+				{
+					return $row->P_ID;
+				}
+			}
+			else
+			{
+				return FALSE;	
+			}
+		}
+		
+		
 		public function get_all_projects($limit, $start, $capabiltity_search, $status_search) 
 		{
 			if ($capabiltity_search!='')
@@ -58,12 +78,31 @@
 		
 		public function insert_project($data)
 		{
-			if($this->db->insert('project', $data))
+			if($this->db->insert('tb_project', $data))
 			{
 				return TRUE;
 			}
 				return FALSE;
 		}
+		
+		public function insert_ee($data)
+		{
+			if($this->db->insert('tb_entry_exit', $data))
+			{
+				return TRUE;
+			}
+				return FALSE;
+		}
+		
+		public function insert_td($data)
+		{
+			if($this->db->insert('tb_tech_design', $data))
+			{
+				return TRUE;
+			}
+				return FALSE;
+		}
+		
 		
 		public function get_all_proj_req($proj_id)
 		{

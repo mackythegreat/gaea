@@ -29,7 +29,7 @@
 		
 		public function display_projects() 
 		{
-			if(($this->session->userdata('user_type') == 'Lead') || ($this->session->userdata('is_admin') != 0) || ($this->session->userdata('is_qa_rep') != 0))
+			/*if(($this->session->userdata('user_type') == 'Lead') || ($this->session->userdata('is_admin') != 0) || ($this->session->userdata('is_qa_rep') != 0))
 			{				
 				$config = array();				
 				$config['base_url'] = site_url('project/display_projects');
@@ -83,15 +83,19 @@
 				$data["projects_table"] = $projects_result->result();
 				$data["pagination"] = $this->pagination->create_links();
 
-				$this->load->view('template/header');
-				$this->load->view('project/display_projects',$data);
-				$this->load->view('template/footer');
+				$this->load->view('header');
+				$this->load->view('display_projects',$data);
+				$this->load->view('footer');
 			}
 			else
 			{
 				$this->session->set_flashdata('message','You are not allowed to view this page!');
 				redirect('user/user_dashboard');
-			}
+			}*/
+			
+			$this->load->view('template/header');
+			$this->load->view('project/display_projects');
+			$this->load->view('template/footer');
 		}
 		
 		public function filter()
@@ -198,9 +202,9 @@
 			
 			$data['title'] = 'Project Requirements';
 			$data['norecord'] = '';
-			$this->load->view('template/header');
-			$this->load->view('project/project_requirements',$data);
-			$this->load->view('template/footer');
+			$this->load->view('header');
+			$this->load->view('project_requirements',$data);
+			$this->load->view('footer');
 		}
 		
 		public function add_project()
@@ -212,16 +216,39 @@
 			}
 			else
 			{
-				$data['proj_name'] = $this->input->post('proj_name');
-				$data['capability_id'] = $this->input->post('capability_id');
-				$data['start_date'] = $this->input->post('start_date');
-				$data['end_date'] = $this->input->post('end_date');
-				$data['status'] = $this->input->post('status');
-
+				$p_id = $this->m_project->get_p_id();
+				if($p_id == FALSE)
+				{
+					$p_id = 1;
+				}
+				else
+				{	
+					$p_id += 1;
+				}
+				
+				// Insert new project
+				$data['P_ID'] = $p_id;
+				$data['P_NAME'] = $this->input->post('p_name');
+				$data['P_TEAM_ID'] = $this->input->post('p_team_id');
+				$data['P_START_DT'] = $this->input->post('p_start_dt');
+				$data['P_END_DT'] = $this->input->post('p_end_dt');
+				$data['P_STATUS'] = $this->input->post('p_status');
 				$this->m_project->insert_project($data);
+				
+				// Insert new td
+				$td['P_ID'] = $p_id;
+				$td['TD_DOC_NAME'] = $this->input->post('td_doc_name');
+				$td['TD_DOC_LINK'] = $this->input->post('td_doc_link');
+				$this->m_project->insert_td($td);
+				
+				// Insert new entry-exit
+				$ee['P_ID'] = $p_id;
+				$ee['EE_DOC_NAME'] = $this->input->post('ee_doc_name');
+				$ee['EE_DOC_LINK'] = $this->input->post('ee_doc_link');
+				$this->m_project->insert_ee($ee);
 		
-				$this->session->set_flashdata('message','New project has been added!');
-				redirect('project/add_project','refresh');
+				$this->session->set_flashdata('message','New project has been added!'.$p_id);
+				redirect('project/display_projects','refresh');
 			}	
 		}
 		
@@ -245,8 +272,8 @@
 		
 		function check_date() 
 		{
-			$start_date = strtotime($this->input->post('start_date'));
-			$end_date = strtotime($this->input->post('end_date'));
+			$start_date = strtotime($this->input->post('p_start_dt'));
+			$end_date = strtotime($this->input->post('p_end_dt'));
 
 			if ($end_date >= $start_date){
 				return TRUE;
@@ -259,11 +286,9 @@
 		
 		private function submit_validate()
 		{	
-			$this->form_validation->set_rules('proj_name', 'Project Name','trim|required');
-			$this->form_validation->set_rules('start_date', 'Start Date','trim|required');
-			if($this->input->post('end_date')!='')
+			if($this->input->post('p_end_dt')!='')
 			{
-				$this->form_validation->set_rules('end_date', 'End Date','trim|required|callback_check_date');
+				$this->form_validation->set_rules('p_end_dt', 'End Date','trim|required|callback_check_date');
 			}
 			
 			return $this->form_validation->run();	
