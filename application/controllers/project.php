@@ -31,13 +31,33 @@
 		{
 			if($this->submit_validate()===FALSE)
 			{
+				
+				$td_version = $this->m_project->get_td_version($p_id);
+				if($td_version == FALSE){
+					$td_version = 1;
+				}
+				else{	
+					$td_version += 1;
+				}
+				
+				$data['td_ver'] = $td_version;
+				
+				/*Retrieve project details*/
 				$row = $this->m_project->get_project_details($p_id);			
-				$data['project_details'] = $row->result();				
+				$data['project_details'] = $row->result();
+
+				/*Retrieve project td*/
+				$td_row = $this->m_project->get_td_details($p_id);			
+				$data['td_details'] = $td_row->result();
+				
+				/*Retrieve project td*/
+				$ee_row = $this->m_project->get_ee_details($p_id);			
+				$data['ee_details'] = $ee_row->result();
+
 				$this->load->view('template/header',$data);
 				$this->load->view('project/update_project',$data);
 				$this->load->view('template/footer',$data);
 			}
-			
 			else
 			{
 				$p_id = $this->input->post('p_id');		
@@ -45,23 +65,47 @@
 				// Update Project
 				$data['P_ID'] = $p_id;
 				$data['P_NAME'] = $this->input->post('p_name');
-				$data['P_TEAM_ID'] = $this->input->post('p_team_id');
+				$data['P_TEAM_ID'] = $this->session->userdata('team_id');
 				$data['P_START_DT'] = $this->input->post('p_start_dt');
 				$data['P_END_DT'] = $this->input->post('p_end_dt');
 				$data['P_STATUS'] = $this->input->post('p_status');
 				$this->m_project->update_project($p_id,$data);
 				
-				// Update Technical Design
-				$td['P_ID'] = $p_id;
-				$td['TD_DOC_NAME'] = $this->input->post('td_doc_name');
-				$td['TD_DOC_LINK'] = $this->input->post('td_doc_link');
-				$this->m_project->update_td($p_id,$td);
-				
 				// Update Entry-Exit
-				$ee['P_ID'] = $p_id;
-				$ee['EE_DOC_NAME'] = $this->input->post('ee_doc_name');
-				$ee['EE_DOC_LINK'] = $this->input->post('ee_doc_link');
-				$this->m_project->update_ee($p_id,$ee);
+				$ee_id = $this->input->post('ee_id');
+				$ee['ee_doc_name'] = $this->input->post('ee_doc_name');
+				$ee['ee_doc_link'] = $this->input->post('ee_doc_link');
+				$this->m_project->update_ee($p_id, $ee_id, $ee);
+				
+				// Update Technical Design
+				extract($_POST);
+				foreach($tx_td_doc_name as $key=>$value) 
+				{
+					$u_td_arr = array(
+
+						'td_doc_name'   => $value,
+						'td_doc_link' => $tx_td_doc_link[$key],
+						'td_id' => $tx_td_id[$key],
+					);
+					$this->m_project->update_td($p_id, $u_td_arr['td_id'], $u_td_arr);	
+				}
+				
+				// Add Technical Design
+				extract($_POST);
+				$ex = '';
+				foreach($bx_td_doc_name as $key=>$value) 
+				{
+					$td_arr = array(
+
+						'td_doc_name'   => $value,
+						'p_id'      => $bx_p_id[$key],
+						'td_doc_link' => $bx_td_doc_link[$key],
+					);
+					
+					if(($td_arr['td_doc_name'] != null) && ($td_arr['td_doc_link'] != null)){
+						$this->m_project->insert_td($td_arr);	
+					}
+				}
 			
 				$this->session->set_flashdata('message',$data['P_NAME'].' has been updated');
 				redirect('project/display_projects');	
@@ -254,13 +298,19 @@
 			else
 			{
 				$p_id = $this->m_project->get_p_id();
-				if($p_id == FALSE)
-				{
+				if($p_id == FALSE){
 					$p_id = 1;
 				}
-				else
-				{	
+				else{	
 					$p_id += 1;
+				}
+				
+				$td_version = $this->m_project->get_td_version($p_id);
+				if($td_version == FALSE){
+					$td_version = 1;
+				}
+				else{	
+					$td_version += 1;
 				}
 				
 				// Insert new project
@@ -274,8 +324,9 @@
 				
 				// Insert new td
 				$td['P_ID'] = $p_id;
-				$td['TD_DOC_NAME'] = $this->input->post('td_doc_name');
+				$td['TD_DOC_NAME'] = $this->input->post('td_doc_name').' ver.'.$td_version;
 				$td['TD_DOC_LINK'] = $this->input->post('td_doc_link');
+				$td['TD_VERSION'] = $td_version;
 				$this->m_project->insert_td($td);
 				
 				// Insert new entry-exit
@@ -325,7 +376,7 @@
 		{	
 			if($this->input->post('p_end_dt')!='')
 			{
-				$this->form_validation->set_rules('p_end_dt', 'End Date','trim|required|callback_check_date');
+				$this->form_validation->set_rules('p_end_dt', 'End Date','callback_check_date');
 			}
 			
 			return $this->form_validation->run();	

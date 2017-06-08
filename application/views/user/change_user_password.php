@@ -6,7 +6,7 @@
 <body>
 			
 		<?php foreach($user_detail as $item):?>
-			<?php echo form_open_multipart('user/change_password/'.$item->eid); ?>
+			<?php echo form_open_multipart('user/change_password/'.$item->id); ?>
 						
 				<body style="background-color:#f5f5f5;">
 		<?php if($this->session->flashdata('message')){  echo $this->session->flashdata('message'); } ?>
