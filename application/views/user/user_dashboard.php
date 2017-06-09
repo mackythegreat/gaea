@@ -2,6 +2,10 @@
 <body>
 	<div class="container">
 		<div class="row" style="text-align:center">
+			
+		</div>
+	
+		<div class="row" style="text-align:center">
 		
 			<div class="col-md-4 well" style="display:inline-block; text-align:left; float:left;" data-spy="scroll" data-offset="10">
 				<h3>Project Catalog</h3>

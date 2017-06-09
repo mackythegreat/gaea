@@ -170,6 +170,7 @@
 				{ 
 					$capabiltity_search = $this->session->userdata('team_id');
 					$usertype_search = '';
+					$eid_search = '';
 				}
 				else
 				{
@@ -177,13 +178,15 @@
 					$capabiltity_search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $capabiltity_search;
 					
 					$usertype_search = ($this->input->post("usertype_search"))? $this->input->post("usertype_search") : '';
-					$usertype_search = ($this->uri->segment(5)) ? $this->uri->segment(5) : $usertype_search;
+					
+					$eid_search = ($this->input->post("eid_search"))? $this->input->post("eid_search") : '';
+
 				}
 
 				// pagination settings
 				$config = array();
 				$config['base_url'] = site_url("user/filter/$capabiltity_search");
-				$config['total_rows'] = $this->m_user->user_count($capabiltity_search,$usertype_search);
+				$config['total_rows'] = $this->m_user->user_count($capabiltity_search,$usertype_search,$eid_search);
 				$config['per_page'] = 10;
 				$config["uri_segment"] = 4;
 				$choice = $config["total_rows"]/$config["per_page"];
@@ -211,7 +214,8 @@
 				$this->pagination->initialize($config);
 
 				$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-				$data['users_table'] = $this->m_user->get_all_users($config['per_page'], $data['page'], $capabiltity_search,$usertype_search);
+				$data['users_table'] = $this->m_user->get_all_users($config['per_page'], $data['page'], $capabiltity_search,
+				$usertype_search, $eid_search);
 				$data['pagination'] = $this->pagination->create_links();
 
 				//load view
@@ -252,14 +256,7 @@
 				foreach ($user_data['user_detail'] as $users_item){}
 				
 				$this->session->set_flashdata('message','Your password has been updated!');
-				if($users_item->is_admin != 0)
-				{
-					redirect('user/display_users');
-				}
-				else
-				{
-					redirect('user/user_dashboard');	
-				}
+				redirect('user/change_password');
 			}
 		}
 		
@@ -370,21 +367,27 @@
 			return $this->form_validation->run();	
 		}
 		
-		public function update_user($id='')
+		/* update - jet */
+		public function update_user($id=0)
 		{
 			if(($this->session->userdata('user_type') == 'Lead') or ($this->session->userdata('is_admin') == 1))
 			{
-				$id = $this->input->post('id');
-			
-				if($this->submit_validate($id)===FALSE){
+				if($this->submit_validate($id)===FALSE)
+				{
+					/*Retrieve project details*/
 					$row = $this->m_user->get_user_details($id);
-					$data['users_detail'] = $row->result();
-					return $this->load->view('update_user',$data);
+					$data['user_details'] = $row->result();
+
+					$this->load->view('template/header',$data);
+					$this->load->view('user/update_user',$data);
+					$this->load->view('template/footer',$data);
 				}
 				else
 				{
-					$id = $this->input->post('id');		
+					$id = $this->input->post('id');
 					
+					
+					/* Update User */
 					$data['eid'] = $this->input->post('eid');
 					$data['career_level_id'] = $this->input->post('career_level_id');
 					$data['email_address'] = $data['eid'].'@accenture.com';
@@ -392,7 +395,8 @@
 					$data['user_type'] = $this->input->post('user_type');
 					$data['is_admin'] = $this->input->post('is_admin');
 					$data['is_qa_rep'] = $this->input->post('is_qa_rep');
-				
+					
+					
 					$this->m_user->update_user($id, $data);
 					$this->session->set_flashdata('message', $data['eid'].'\'s information has been updated');
 					redirect('user/display_users');	
@@ -404,6 +408,7 @@
 				redirect('user/user_dashboard');
 			}
 		}
+		/* update - jet */
 		
 		public function create_todo()
 		{

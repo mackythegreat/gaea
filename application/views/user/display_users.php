@@ -7,9 +7,7 @@
 							   '2' => '.NET',
 							   '3' => 'C++',
 							   '4' => 'Java',
-							   '5' => 'PHP',
-							   '6' => 'PL/SQL',
-							   '7' => 'System Test' ); ?>
+							   '6' => 'PL/SQL'); ?>
 	
 	<?php $user_type = array ('' => 'All',
 							  'User' => 'User',
@@ -31,9 +29,9 @@
 					</div>
 				<!--end of addPRModal Placeholder-->
 				
-				<div style='margin-left: 100px;'>
-				<?php echo anchor('user/add_user','Export To Excel', "class='btn btn-success btn-sm pull-right'"); ?>
-				</div>
+				<!-- <div style='margin-left: 100px;'> -->
+				<?php // echo anchor('user/add_user','Export To Excel', "class='btn btn-success btn-sm pull-right'"); ?>
+				<!-- </div> -->
 			</div>
 				
 				<div>
@@ -48,12 +46,16 @@
 			<div class="col-md-12">
 				<div class="small col-md-3">
 					<?php echo form_open('user/filter'); ?></p>
-						<label><span class="text-danger"><b></b></span> Capability</label><br />
+						<label><span class="text-danger"></span> Capability</label><br />
 						<?php echo form_dropdown('capability_search', $capability, '', 'class="form-control form-control-lg"'); ?> 
 						<br />
 						
-						<label><span class="text-danger"><b></b></span> Type</label><br />
+						<label><span class="text-danger"></span> Type</label><br />
 						<?php echo form_dropdown('usertype_search', $user_type, '', 'class="form-control form-control-lg"'); ?> 
+						<br />
+						
+						<label><span class="text-danger"></span> EID</label><br />
+						<input type="text" name="eid_search" class="form-control form-control-lg">
 						<br />
 		
 						<?php echo form_submit('submit','Filter', "class='btn btn-block btn-warning'");?>
@@ -89,21 +91,12 @@
 								<td class="text-center"><?php echo $users_item->user_type;?></td>
 								<td class="text-center"><?php echo $users_item->team;?></td>
 								
-								<!--START UPDATE USER-->
-								<td><a href='#'  data-toggle="modal" data-target="#editUser" class='update_user btn btn-info btn-lg btn-xs'
-								data-id='<?php echo $users_item->id;?>' 
-								data-eid='<?php echo $users_item->eid;?>'
-								data-career_level_id='<?php echo $users_item->career_level_id;?>'
-								data-team_id='<?php echo $users_item->team_id;?>'
-								data-user_type='<?php echo $users_item->user_type;?>'
-								data-is_admin='<?php echo $users_item->is_admin;?>'
-								data-is_qa_rep='<?php echo $users_item->is_qa_rep;?>'
-								 title='Update <?php echo $users_item->eid ?>'
-								><span class='glyphicon glyphicon-th-list'></span></a>
-								</td>
-								<?php $this->view('/modals/update_user');?>
-								<!--END UPDATE USER-->
 								
+								<td><a href='<?php echo base_url().'user/update_user/'.$users_item->id?>'
+										class="btn btn-info btn-lg btn-xs" data-toggle="tooltip" 
+										title="Update <?php echo $users_item->eid?>">
+										<span class='glyphicon glyphicon-pencil'></span></a></td>
+										
 								<td><a href='<?php echo base_url();?>user/reset_password/<?php echo $users_item->id?>/<?php echo $users_item->eid?>'
 												class='btn btn-warning btn-lg btn-xs' data-toggle='tooltip' 
 												title='Reset <?php echo $users_item->eid ?> password'>

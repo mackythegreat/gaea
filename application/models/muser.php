@@ -32,6 +32,7 @@
 		public function get_user_details($id)
 		{	
 			$this->db->where('id',$id);
+			
 			$query = $this->db->get('user');
 			
 			if($query->num_rows() > 0)
@@ -50,7 +51,7 @@
 			$this->db->update('user',$data);
 		}
 		
-		public function get_all_users($limit, $start, $capabiltity_search, $usertype_search) 
+		public function get_all_users($limit, $start, $capabiltity_search, $usertype_search, $eid_search='') 
 		{
 			if ($capabiltity_search!='')
 			{
@@ -59,6 +60,10 @@
 			if ($usertype_search!='')
 			{
 				$this->db->where("(user.user_type LIKE '%$usertype_search%')");
+            }
+			if ($eid_search!='')
+			{
+				$this->db->where("(user.eid LIKE '%$eid_search%')");
             }
 			
 			$this->db->limit($limit, $start);
@@ -79,7 +84,7 @@
 			redirect('user/display_users','refresh');
 		}
 		
-		public function user_count($capabiltity_search='', $usertype_search='') {
+		public function user_count($capabiltity_search='', $usertype_search='', $eid_search='') {
 			if ($capabiltity_search!='')
 			{
 				$this->db->where("(capability.id LIKE '%$capabiltity_search%')");
@@ -87,6 +92,10 @@
 			if ($usertype_search!='')
 			{
 				$this->db->where("(user.user_type LIKE '%$usertype_search%')");
+            }
+			if ($eid_search!='')
+			{
+				$this->db->where("(user.eid LIKE '%$eid_search%')");
             }
 			
 			$this->db->select('user.id, user.eid, career_level.title, user.user_type, capability.team, user.is_active');
@@ -115,6 +124,7 @@
 		public function reset_password($eid)
 		{		
 			$this->db->set('password', md5('123456q!'));
+			$this->db->set('is_password_changed',0);
 			$this->db->where('id',$eid);
 			$this->db->update('user');
 		}
