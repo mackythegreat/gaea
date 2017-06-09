@@ -21,6 +21,7 @@
 		<script type="text/javascript" src='<?php echo base_url();?>angular/angular.min.js'></script>
 		<script type="text/javascript" src='<?php echo base_url();?>angular/gqm_validation.js'></script>
 		<script type="text/javascript" src='<?php echo base_url();?>angular/angular-messages.js'></script>
+		<script type="text/javascript" src='<?php echo base_url();?>gqm_custom_lib.js'></script>
 		<script>$(document).ready(function(){    $('[data-toggle="tooltip"]').tooltip();   });</script>
 		<!--End Style Sheet Area-->
 		

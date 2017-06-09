@@ -91,15 +91,17 @@
 				}
 				
 				// Add Technical Design
+				
 				extract($_POST);
 				$ex = '';
 				foreach($bx_td_doc_name as $key=>$value) 
 				{
 					$td_arr = array(
 
-						'td_doc_name'   => $value,
+						'td_doc_name'   => 'Accenture Intralot - '.$this->input->post('p_name').' - Technical Design ver.'.$bx_td_version[$key] ,
 						'p_id'      => $bx_p_id[$key],
 						'td_doc_link' => $bx_td_doc_link[$key],
+						'td_version' => $bx_td_version[$key],
 					);
 					
 					if(($td_arr['td_doc_name'] != null) && ($td_arr['td_doc_link'] != null)){
@@ -110,6 +112,37 @@
 				$this->session->set_flashdata('message',$data['P_NAME'].' has been updated');
 				redirect('project/display_projects');	
 			}
+		}
+		
+		
+		public function view_project($p_id=0)
+		{
+			$td_version = $this->m_project->get_td_version($p_id);
+			if($td_version == FALSE){
+				$td_version = 1;
+			}
+			else{	
+				$td_version += 1;
+			}
+			
+			$data['td_ver'] = $td_version;
+			
+			/*Retrieve project details*/
+			$row = $this->m_project->get_project_details($p_id);			
+			$data['project_details'] = $row->result();
+
+			/*Retrieve project td*/
+			$td_row = $this->m_project->get_td_details($p_id);			
+			$data['td_details'] = $td_row->result();
+			
+			/*Retrieve project td*/
+			$ee_row = $this->m_project->get_ee_details($p_id);			
+			$data['ee_details'] = $ee_row->result();
+
+			$this->load->view('template/header',$data);
+			$this->load->view('project/view_project',$data);
+			$this->load->view('template/footer',$data);
+			
 		}
 		
 		public function display_projects() 
@@ -338,6 +371,14 @@
 				$this->session->set_flashdata('message','New project has been added!'.$p_id);
 				redirect('project/display_projects','refresh');
 			}	
+		}
+		
+		public function delete_project($p_id=0, $p_name){
+			$this->m_project->delete_project($p_id);
+			$this->m_project->delete_td($p_id);
+			$this->m_project->delete_ee($p_id);
+			$this->session->set_flashdata('message',$p_name.' has been deleted');
+			redirect('project/display_projects');
 		}
 		
 		public function add_project_requirements()

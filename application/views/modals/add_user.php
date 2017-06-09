@@ -94,7 +94,7 @@
 		<div class="modal-footer">
 			<?php echo form_submit('submit','Create','class="btn btn-info" ng-disabled="userForm.$invalid"');?>
 			<?php echo form_close(); ?>
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>	
+			<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>	
         </div>
       </div>
       

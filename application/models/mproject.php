@@ -159,6 +159,24 @@
 				return FALSE;
 		}
 		
+		public function delete_project($p_id)
+		{
+			$this->db->where('p_id',$p_id);
+			$this->db->delete('tb_project');	
+		}
+		
+		public function delete_td($p_id)
+		{
+			$this->db->where('p_id',$p_id);
+			$this->db->delete('tb_tech_design');	
+		}
+		
+		public function delete_ee($p_id)
+		{
+			$this->db->where('p_id',$p_id);
+			$this->db->delete('tb_entry_exit');	
+		}
+		
 		public function insert_ee($data) //used
 		{
 			if($this->db->insert('tb_entry_exit', $data))

@@ -13,6 +13,31 @@
 						   'Not Started' => 'Not Started',
 						   'In Progress' => 'In Progress',
 						   'Completed' => 'Completed'); ?>
+						   
+	<?php $month = array (''   => 'All',
+						  '1'  => 'January',
+						  '2'  => 'February', 
+						  '3'  => 'March', 
+						  '4'  => 'April', 
+						  '5'  => 'May',
+						  '6'  => 'June',
+						  '7'  => 'July',
+						  '8'  => 'August',
+						  '9'  => 'September',
+						  '10' => 'October',
+						  '11' => 'November',
+						  '12' => 'December'
+						  ); ?>
+										  
+	<?php $year = array (''     => 'All',
+						 '2016' => '2016',
+						 '2017' => '2017',
+						 '2018' => '2018',
+						 '2019' => '2019',
+						 '2020' => '2020',
+						 '2021' => '2021'
+						 ); ?>
+						 
 		
 	<div class="container">
 		<div class="row">
@@ -37,17 +62,31 @@
 		
 		<div class="row">
 		<div class="col-md-12">
+		
+			<!-- Filter -->
 			<div class="small col-md-3">
 				<?php echo form_open('project/filter'); ?></p>
 					
+					<!-- Capability -->
 					<label><span class="text-danger"><b></b></span> Capability</label><br />
 					<?php echo form_dropdown('capability_search', $capability, '', 'class="form-control form-control-lg"'); ?>
 					<br />
 					
+					<!-- Status -->
 					<label><span class="text-danger"><b></b></span> Status</label><br />
 					<?php echo form_dropdown('status_search', $status, '', 'class="form-control form-control-lg"'); ?> 
 					<br />
 					
+					<!-- Month -->
+					<label><span class="text-danger"><b></b></span> Month</label><br />
+					<?php echo form_dropdown('month_search', $month, '', 'class="form-control form-control-lg"'); ?> 
+					<br />
+					
+					<!-- Year -->
+					<label><span class="text-danger"><b></b></span> Year</label><br />
+					<?php echo form_dropdown('year_search', $year, '', 'class="form-control form-control-lg"'); ?> 
+					
+					<hr />
 					<?php echo form_submit('submit','Filter', "class='btn btn-block btn-warning'");?>
 					
 					<hr />
@@ -64,7 +103,7 @@
 						<th class="text-center">START DATE</th>
 						<th class="text-center">END DATE</th>
 						<th class="text-center">STATUS</th>
-						<th colspan = 3  class="text-center">ACTION</th>
+						<th colspan = 4  class="text-center">ACTION</th>
 					</tr>
 				</thead>
 				
@@ -78,15 +117,25 @@
 						<?php } else { ?> <td class="text-center"><?php echo $item->end_date;?></td> <?php }?>
 						<td class="text-center"><?php echo $item->status;?></td>
 						
-						<td><a href='<?php echo base_url().'project/show_project_requirements/'.$item->proj_id?>'
+						<td><a href='<?php echo base_url().'project/view_project/'.$item->proj_id?>'
 										class="btn btn-success btn-lg btn-xs" data-toggle="tooltip" 
 										title="View <?php echo $item->proj_name?>">
+										<span class='glyphicon glyphicon-eye-open'></span></a></td>
+										
+						<td><a href='<?php echo base_url().'project/show_project_requirements/'.$item->proj_id?>'
+										class="btn btn-warning btn-lg btn-xs" data-toggle="tooltip" 
+										title="View <?php echo $item->proj_name?> Project Requirement">
 										<span class='glyphicon glyphicon-folder-open'></span></a></td>
 						
 						<td><a href='<?php echo base_url().'project/update_project/'.$item->proj_id?>'
 										class="btn btn-info btn-lg btn-xs" data-toggle="tooltip" 
 										title="Edit <?php echo $item->proj_name?>">
 										<span class='glyphicon glyphicon-pencil'></span></a></td>
+						
+						<td><a href='<?php echo base_url().'project/delete_project/'.$item->proj_id.'/'.$item->proj_name?>'
+											class="btn btn-danger btn-lg btn-xs" data-toggle="tooltip" 
+											title="Delete <?php echo $item->proj_name?>">
+											<span class='glyphicon glyphicon-remove-circle'></span></a></td>
 					</tr>
 				</tbody>
 				<?php endforeach;?>
