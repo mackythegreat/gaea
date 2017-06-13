@@ -1,3 +1,14 @@
+<script type="text/javascript">
+ jQuery(document).ready(function(){
+
+	jQuery('select#capab').val('<?php echo $_POST['capability_search'];?>');
+	jQuery('select#stat').val('<?php echo $_POST['status_search'];?>');
+	jQuery('select#mon').val('<?php echo $_POST['month_search'];?>');
+	jQuery('select#yr').val('<?php echo $_POST['year_search'];?>');
+
+ });
+</script>
+
 <title>Display All Projects</title>
 
 <body>
@@ -15,15 +26,15 @@
 						   'Completed' => 'Completed'); ?>
 						   
 	<?php $month = array (''   => 'All',
-						  '1'  => 'January',
-						  '2'  => 'February', 
-						  '3'  => 'March', 
-						  '4'  => 'April', 
-						  '5'  => 'May',
-						  '6'  => 'June',
-						  '7'  => 'July',
-						  '8'  => 'August',
-						  '9'  => 'September',
+						  '01'  => 'January',
+						  '02'  => 'February', 
+						  '03'  => 'March', 
+						  '04'  => 'April', 
+						  '05'  => 'May',
+						  '06'  => 'June',
+						  '07'  => 'July',
+						  '08'  => 'August',
+						  '09'  => 'September',
 						  '10' => 'October',
 						  '11' => 'November',
 						  '12' => 'December'
@@ -69,22 +80,22 @@
 					
 					<!-- Capability -->
 					<label><span class="text-danger"><b></b></span> Capability</label><br />
-					<?php echo form_dropdown('capability_search', $capability, '', 'class="form-control form-control-lg"'); ?>
+					<?php echo form_dropdown('capability_search', $capability, '', 'class="form-control form-control-lg" id="capab"'); ?>
 					<br />
 					
 					<!-- Status -->
 					<label><span class="text-danger"><b></b></span> Status</label><br />
-					<?php echo form_dropdown('status_search', $status, '', 'class="form-control form-control-lg"'); ?> 
+					<?php echo form_dropdown('status_search', $status, '', 'class="form-control form-control-lg" id="stat"'); ?> 
 					<br />
 					
 					<!-- Month -->
 					<label><span class="text-danger"><b></b></span> Month</label><br />
-					<?php echo form_dropdown('month_search', $month, '', 'class="form-control form-control-lg"'); ?> 
+					<?php echo form_dropdown('month_search', $month, '', 'class="form-control form-control-lg" id="mon"'); ?> 
 					<br />
 					
 					<!-- Year -->
 					<label><span class="text-danger"><b></b></span> Year</label><br />
-					<?php echo form_dropdown('year_search', $year, '', 'class="form-control form-control-lg"'); ?> 
+					<?php echo form_dropdown('year_search', $year, '', 'class="form-control form-control-lg" id="yr"'); ?> 
 					
 					<hr />
 					<?php echo form_submit('submit','Filter', "class='btn btn-block btn-warning'");?>

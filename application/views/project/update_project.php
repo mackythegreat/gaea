@@ -93,7 +93,7 @@
 						<div id="p_end_dt" class="input-group date"  data-date-format="yyyy-dd-mm">
 							<?php echo form_input('p_end_dt', '{{main.p_end_dt}}', 'type="text" class="form-control"
 							ng-model="main.p_end_dt"
-							required'); ?>
+							required ng-change="checkErr(main.p_start_dt,main.p_end_dt)"'); ?>
 							<div class="input-group-addon">
 								<span class="glyphicon glyphicon-th"></span>
 							</div>
@@ -108,6 +108,7 @@
 							});
 						</script>
 					
+						<div span class="text-danger">{{errMessage}}</div>
 						<div class="help-block" ng-messages="projForm.p_end_dt.$error" ng-if="projForm.p_end_dt.$touched">
 							<p ng-message="required">End Date is required.</p>
 						</div>
@@ -223,7 +224,7 @@
 		
 		<hr />
 		
-		<?php echo form_submit('submit','Save','class="btn btn-info btn-block" ng-disabled="projForm.$invalid"');?>
+		<?php echo form_submit('submit','Save','class="btn btn-info btn-block" ng-disabled="checkErr(main.p_start_dt,main.p_end_dt) === false || projForm.$invalid"');?>
 		
 		<!-- Back Button -->
 		<a href="javascript:history.go(-1)"class="btn btn-warning btn-block" > Back </a>
@@ -247,6 +248,7 @@
 				if(count > 5)
 				{
 					alert("Maximum Technical Design to be added is 5.");
+					return false;
 				}
 				count++;
 				var p_id = document.createElement("INPUT");

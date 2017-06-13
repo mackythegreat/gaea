@@ -7,6 +7,17 @@
 
   function MainCtrl($scope) {
     // Some code
+	
+	$scope.checkErr = function(startDate,endDate) 
+	{
+		$scope.errMessage = '';
+		var curDate = new Date();
+
+		if(new Date(startDate) > new Date(endDate)){
+		  $scope.errMessage = 'End Date should be greater than start date';
+		  return false;
+		}
+	};
   }
 
   function passwordVerify() {
@@ -37,3 +48,5 @@
       }
     }
   }
+  
+  

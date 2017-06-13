@@ -197,7 +197,7 @@
 					$team_id = $this->session->userdata('team_id');
 				}
 
-				$projects_result = $this->m_project->get_all_projects($config["per_page"], $page, $team_id, '');
+				$projects_result = $this->m_project->get_all_projects($config["per_page"], $page, $team_id, '', '', '');
 				$data["projects_table"] = $projects_result->result();
 				$data["pagination"] = $this->pagination->create_links();
 
@@ -228,19 +228,18 @@
 				}
 				else
 				{
-					$capabiltity_search = ($this->input->post("capability_search"))? $this->input->post("capability_search") : '';
-					$capabiltity_search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $capabiltity_search;
-					
-					$status_search = ($this->input->post("status_search"))? $this->input->post("status_search") : '';
-					$status_search = ($this->uri->segment(5)) ? $this->uri->segment(5) : $status_search;
+					$capabiltity_search = ($this->input->post("capability_search"))? $this->input->post("capability_search") : 0;
+					$status_search = ($this->input->post("status_search"))? $this->input->post("status_search") : 0;
+					$month_search = ($this->input->post("month_search"))? $this->input->post("month_search") : 0;
+					$year_search = ($this->input->post("year_search"))? $this->input->post("year_search") : 0;
 				}
 
 				// pagination settings
 				$config = array();
-				$config['base_url'] = site_url("project/filter/$capabiltity_search");
-				$config['total_rows'] = $this->m_project->proj_count($capabiltity_search,$status_search);
+				$config['base_url'] = site_url("project/filter/$capabiltity_search/$status_search/$month_search/$year_search");
+				$config['total_rows'] = $this->m_project->proj_count($capabiltity_search,$status_search,$month_search, $year_search);
 				$config['per_page'] = 10;
-				$config["uri_segment"] = 4;
+				$config["uri_segment"] = 7;
 				$choice = $config["total_rows"]/$config["per_page"];
 				$config["num_links"] = floor($choice);
 
@@ -265,8 +264,8 @@
 				$config['num_tag_close'] = '</li>';
 				$this->pagination->initialize($config);
 
-				$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-				$project_result = $this->m_project->get_all_projects($config['per_page'], $data['page'], $capabiltity_search,$status_search);
+				$data['page'] = ($this->uri->segment(7)) ? $this->uri->segment(7) : 0;
+				$project_result = $this->m_project->get_all_projects($config['per_page'], $data['page'], $capabiltity_search,$status_search, $month_search, $year_search);
 				$data['projects_table'] = $project_result->result();
 				$data['pagination'] = $this->pagination->create_links();
 
@@ -368,7 +367,7 @@
 				$ee['EE_DOC_LINK'] = $this->input->post('ee_doc_link');
 				$this->m_project->insert_ee($ee);
 		
-				$this->session->set_flashdata('message','New project has been added!'.$p_id);
+				$this->session->set_flashdata('message','New project has been added!');
 				redirect('project/display_projects','refresh');
 			}	
 		}

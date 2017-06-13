@@ -174,21 +174,21 @@
 				}
 				else
 				{
-					$capabiltity_search = ($this->input->post("capability_search"))? $this->input->post("capability_search") : '';
-					$capabiltity_search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $capabiltity_search;
+					$capabiltity_search = ($this->input->post("capability_search"))? $this->input->post("capability_search") : 0;
+					//$capabiltity_search = ($this->uri->segment(3)) ? $this->uri->segment(3) : $capabiltity_search;
 					
-					$usertype_search = ($this->input->post("usertype_search"))? $this->input->post("usertype_search") : '';
+					$usertype_search = ($this->input->post("usertype_search"))? $this->input->post("usertype_search") : 0;
 					
-					$eid_search = ($this->input->post("eid_search"))? $this->input->post("eid_search") : '';
+					$eid_search = ($this->input->post("eid_search"))? $this->input->post("eid_search") : 0;
 
 				}
 
 				// pagination settings
 				$config = array();
-				$config['base_url'] = site_url("user/filter/$capabiltity_search");
+				$config['base_url'] = site_url("user/filter/$capabiltity_search/$usertype_search/$eid_search");
 				$config['total_rows'] = $this->m_user->user_count($capabiltity_search,$usertype_search,$eid_search);
 				$config['per_page'] = 10;
-				$config["uri_segment"] = 4;
+				$config["uri_segment"] = 6;
 				$choice = $config["total_rows"]/$config["per_page"];
 				$config["num_links"] = floor($choice);
 
@@ -213,7 +213,7 @@
 				$config['num_tag_close'] = '</li>';
 				$this->pagination->initialize($config);
 
-				$data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+				$data['page'] = ($this->uri->segment(6)) ? $this->uri->segment(6) : 0;
 				$data['users_table'] = $this->m_user->get_all_users($config['per_page'], $data['page'], $capabiltity_search,
 				$usertype_search, $eid_search);
 				$data['pagination'] = $this->pagination->create_links();

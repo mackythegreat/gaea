@@ -1,3 +1,12 @@
+<script type="text/javascript">
+ jQuery(document).ready(function(){
+
+	jQuery('select#capab').val('<?php echo $_POST['capability_search'];?>');
+	jQuery('select#usr').val('<?php echo $_POST['usertype_search'];?>');
+	jQuery('select#eid_src').val('<?php echo $_POST['eid_search'];?>');
+ });
+</script>
+
 <title>Display All Users</title>
 
 <body>
@@ -47,15 +56,15 @@
 				<div class="small col-md-3">
 					<?php echo form_open('user/filter'); ?></p>
 						<label><span class="text-danger"></span> Capability</label><br />
-						<?php echo form_dropdown('capability_search', $capability, '', 'class="form-control form-control-lg"'); ?> 
+						<?php echo form_dropdown('capability_search', $capability, '', 'class="form-control form-control-lg" id="capab"'); ?> 
 						<br />
 						
 						<label><span class="text-danger"></span> Type</label><br />
-						<?php echo form_dropdown('usertype_search', $user_type, '', 'class="form-control form-control-lg"'); ?> 
+						<?php echo form_dropdown('usertype_search', $user_type, '', 'class="form-control form-control-lg" id="usr"'); ?> 
 						<br />
 						
 						<label><span class="text-danger"></span> EID</label><br />
-						<input type="text" name="eid_search" class="form-control form-control-lg">
+						<input type="text" name="eid_search" class="form-control form-control-lg" id="eid_src">
 						<br />
 		
 						<?php echo form_submit('submit','Filter', "class='btn btn-block btn-warning'");?>

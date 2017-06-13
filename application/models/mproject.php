@@ -47,13 +47,18 @@
 			}
 		}
 		
-		public function get_project_details($id)
+		public function get_project_details($id='')
 		{	
+			if($id != '')
+			{
+				$this->db->where('tb_project.p_id',$id);
+			}
+				
 			$this->db->select('tb_project.p_id as proj_id, tb_project.p_name as proj_name, capability.team as team, tb_project.p_start_dt as start_date, 
 							   tb_project.p_end_dt as end_date, tb_project.p_status as status');
 			$this->db->from('tb_project');
 			$this->db->join('capability', 'tb_project.p_team_id = capability.id');
-			$this->db->where('tb_project.p_id',$id);
+			
 			$query = $this->db->get();
 			
 			if($query->num_rows() > 0)
@@ -66,11 +71,15 @@
 			}					
 		}
 		
-		public function get_td_details($id) // used
+		public function get_td_details($id='') // used
 		{	
+			if($id != '')
+			{
+				$this->db->where('p_id',$id);
+			}
 			$this->db->select('td_id, p_id, td_doc_name, td_doc_link, td_version');
 			$this->db->from('tb_tech_design');
-			$this->db->where('p_id',$id);
+			
 			$query = $this->db->get();
 			
 			if($query->num_rows() > 0)
@@ -83,11 +92,15 @@
 			}					
 		}
 		
-		public function get_ee_details($id) // used
+		public function get_ee_details($id='') // used
 		{	
+			if($id != '')
+			{
+				$this->db->where('p_id',$id);
+			}
+			
 			$this->db->select('ee_id, p_id, ee_doc_name, ee_doc_link');
 			$this->db->from('tb_entry_exit');
-			$this->db->where('p_id',$id);
 			$query = $this->db->get();
 			
 			if($query->num_rows() > 0)
@@ -100,7 +113,7 @@
 			}					
 		}
 		
-		public function get_all_projects($limit, $start, $capabiltity_search, $status_search) // used
+		public function get_all_projects($limit, $start, $capabiltity_search, $status_search, $month_search, $year_search) // used
 		{
 			if ($capabiltity_search!='')
 			{
@@ -109,6 +122,14 @@
 			if ($status_search!='')
 			{
 				$this->db->where("(tb_project.p_status LIKE '%$status_search%')");
+            }
+			if ($month_search !='')
+			{
+				$this->db->where("(tb_project.p_start_dt LIKE '____-$month_search-__')");
+            }
+			if ($year_search!='')
+			{
+				$this->db->where("(tb_project.p_start_dt LIKE '$year_search%')");
             }
 			
 			$this->db->limit($limit, $start);
@@ -129,20 +150,28 @@
 			redirect('project/display_projects','refresh');
 		}
 		
-		public function proj_count($capabiltity_search='', $status_search='') {
+		public function proj_count($capabiltity_search='', $status_search='', $month_search='', $year_search='') {
 			if ($capabiltity_search!='')
 			{
 				$this->db->where("(capability.id LIKE '%$capabiltity_search%')");
             }
 			if ($status_search!='')
 			{
-				$this->db->where("(project.status LIKE '%$status_search%')");
+				$this->db->where("(tb_project.p_status LIKE '%$status_search%')");
+            }
+			if ($month_search !='')
+			{
+				$this->db->where("(tb_project.p_start_dt LIKE '____-$month_search-__')");
+            }
+			if ($year_search!='')
+			{
+				$this->db->where("(tb_project.p_start_dt LIKE '$year_search%')");
             }
 			
-			$this->db->select('project.proj_id as proj_id, project.proj_name as proj_name, capability.team as team, project.start_date as start_date, project.end_date as end_date, project.status as status');
-			$this->db->from('project');
-			$this->db->join('capability', 'project.capability_id = capability.id');
-			$this->db->order_by("project.proj_id", "desc"); 
+			$this->db->select('tb_project.p_id as proj_id, tb_project.p_name as proj_name, capability.team as team, tb_project.p_start_dt as start_date, tb_project.p_end_dt as end_date, tb_project.p_status as status');
+			$this->db->from('tb_project');
+			$this->db->join('capability', 'tb_project.p_team_id = capability.id');
+			$this->db->order_by("tb_project.p_id", "desc"); 
 			
 			$query = $this->db->get();
 			return $query->num_rows();

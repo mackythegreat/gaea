@@ -51,7 +51,7 @@
 			$this->db->update('user',$data);
 		}
 		
-		public function get_all_users($limit, $start, $capabiltity_search, $usertype_search, $eid_search='') 
+		public function get_all_users($limit, $start, $capabiltity_search='', $usertype_search='', $eid_search='') 
 		{
 			if ($capabiltity_search!='')
 			{

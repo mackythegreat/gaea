@@ -85,26 +85,32 @@
 					</div>
 					
 					<div class="col-md-6">
-					<label><span class="text-danger"></span> END DATE</label><br />
-					<div id="p_end_dt" class="input-group date" data-date-format="yyyy-dd-mm">
-						<!--input type="text" class="form-control" id="end-date" name="p_end_dt"-->
-						<?php echo form_input('p_end_dt', set_value('p_end_dt'), 'type="text" class="form-control"'); ?>
+						<!-- END DATE -->	
+						<div class="form-group" ng-class="{ 'has-error': projForm.p_end_dt.$touched && projForm.p_end_dt.$invalid }">
+						<label><span class="text-danger"><b>*</b></span> END DATE </label><br />
+						<div id="p_end_dt" class="input-group date"  data-date-format="yyyy-dd-mm">
+						<?php echo form_input('p_end_dt', set_value('p_end_dt'), 'type="text" class="form-control"
+						ng-model="main.p_end_dt"
+						ng-change="checkErr(main.p_start_dt,main.p_end_dt)"'); ?>
 						<div class="input-group-addon">
 							<span class="glyphicon glyphicon-th"></span>
 						</div>
-					</div>
-					<br />
+						</div>
 					
-					<?php echo form_error('p_end_dt'); ?> 
-					
-					<script type="text/javascript">
-						$("#p_end_dt").datepicker({
-							format: "yyyy-mm-dd",
-							autoclose: true,
-							todayHighlight: true,
-							clearBtn: true
-						});
-					</script>
+						<script type="text/javascript">
+							$("#p_end_dt").datepicker({
+								format: "yyyy-mm-dd",
+								autoclose: true,
+								todayHighlight: true,
+								clearBtn: true
+							});
+						</script>
+		
+						<div span class="text-danger">{{errMessage}}</div>
+						<div class="help-block" ng-messages="projForm.p_end_dt.$error" ng-if="projForm.p_end_dt.$touched">
+							<p ng-message="required">End Date is required.</p>
+						</div>
+						</div>
 					</div>
 				</div>
 				
@@ -171,7 +177,7 @@
 				</div>
 		</div>
 		<div class="modal-footer">
-			<?php echo form_submit('submit','Save','class="btn btn-info" ng-disabled="projForm.$invalid"');?>
+			<?php echo form_submit('submit','Save','class="btn btn-info" ng-disabled="checkErr(main.p_start_dt,main.p_end_dt) === false || projForm.$invalid"');?>
 			<?php echo form_close(); ?>
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>	
 		</div>
