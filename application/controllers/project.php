@@ -94,7 +94,7 @@
 				
 				extract($_POST);
 				$ex = '';
-				foreach($bx_td_doc_name as $key=>$value) 
+				foreach($bx_td_version as $key=>$value) 
 				{
 					$td_arr = array(
 
@@ -128,16 +128,22 @@
 			$data['td_ver'] = $td_version;
 			
 			/*Retrieve project details*/
-			$row = $this->m_project->get_project_details($p_id);			
-			$data['project_details'] = $row->result();
+			if($row = $this->m_project->get_project_details($p_id))
+			{
+				$data['project_details'] = $row->result();
+			}
 
 			/*Retrieve project td*/
-			$td_row = $this->m_project->get_td_details($p_id);			
-			$data['td_details'] = $td_row->result();
+			if($td_row = $this->m_project->get_td_details($p_id))
+			{
+				$data['td_details'] = $td_row->result();
+			}
 			
 			/*Retrieve project td*/
-			$ee_row = $this->m_project->get_ee_details($p_id);			
-			$data['ee_details'] = $ee_row->result();
+			if($ee_row = $this->m_project->get_ee_details($p_id))
+			{
+				$data['ee_details'] = $ee_row->result();
+			}
 
 			$this->load->view('template/header',$data);
 			$this->load->view('project/view_project',$data);

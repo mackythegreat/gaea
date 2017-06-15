@@ -18,6 +18,23 @@
 		  return false;
 		}
 	};
+	
+	$scope.set_pnx =  function(proj_name)
+	{
+		if($scope.main.p_name)
+		{
+			$scope.td_name = 'Accenture Intralot - ' + proj_name + ' - Technical Design ver.1';
+			$scope.ee_name = proj_name + ' - Entry-Exit Criteria';
+		}
+		else
+		{
+			$scope.td_name = '';
+			$scope.ee_name = '';
+		}
+	}
+	
+	
+	$scope.regex = RegExp('^((https?|ftp)://)?([a-z]+[.])?[a-z0-9-]+([.][a-z]{1,4}){1,2}(/.*[?].*)?$', 'i');
   }
 
   function passwordVerify() {

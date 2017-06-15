@@ -9,6 +9,14 @@
 			<h4 class="modal-title">ADD NEW PROJECT</h4>
 		</div>
 		
+		<?php $team = array (''  => '-- Select Team --',
+							 '1' => 'ETL',
+							 '2' => '.NET',
+							 '3' => 'C++',
+							 '4' => 'Java',
+							 '6' => 'PL/SQL'); ?>
+		
+		
 		<div class="modal-body">
 			
 			<?php echo form_open_multipart('project/add_project', 'name="projForm" novalidate'); ?>
@@ -21,6 +29,7 @@
 						<?php echo form_input('p_name', set_value('p_name'), 'class="form-control form-control-lg" ng-model="main.p_name"
 						ng-minlength="1"
 						ng-maxlength="50"
+						ng-change="set_pnx(main.p_name)"
 						required'); ?> 
 						
 						<?php $p_name = "{{main.p_name}}";?>
@@ -33,12 +42,13 @@
 						</div>
 						
 					</div>
+
 					<div class="col-md-6">
 						<!--Team-->
 						
 						<div class="form-group" ng-class="{ 'has-error': projForm.p_team_id.$touched && projForm.p_team_id.$invalid }">
 						<label><span class="text-danger"><b>*</b></span> TEAM</label>
-						<?php $team = array ('' => '-- Select Team --','1' => 'ETL', '2' => '.NET', '3' => 'C++', '4' => 'Java', '5' => 'PHP', '6' => 'PL/SQL', '7' => 'System Test' ); ?>
+						
 						<?php echo form_dropdown('p_team_id',$team, '','class="form-control form-control-lg" ng-model="main.p_team_id" required'); ?>
 					
 						<div class="help-block" ng-messages="projForm.p_team_id.$error" ng-if="projForm.p_team_id.$touched">
@@ -117,22 +127,13 @@
 				<hr/>
 				
 				
-				<?php $td_name = 'Accenture Intralot - '. $p_name . ' - Technical Design'; ?>
-				<?php $ee_name = $p_name . ' - Entry-Exit Criteria' ;?>
-				
+
 				
 				<div class="row">
 					<div class="col-md-12">
-					<!--Technical Design-->
-					
-					
-					
-					
-					
-					
 					<label><span class="text-danger"></span>TECHNICAL DESIGN NAME</label>
 					<div class="form-group">
-						<input name="td_doc_name" type="text" size="255" value="<?php echo $td_name; ?>" class="form-control form-control-lg" 
+						<input name="td_doc_name" type="text" size="255" value="{{td_name}}" class="form-control form-control-lg" 
 						readonly>
 					</div>
 					
@@ -142,20 +143,23 @@
 						<?php echo form_input('td_doc_link', set_value('td_doc_link'), 'class="form-control form-control-lg" ng-model="main.td_doc_link"
 						ng-minlength="5"
 						ng-maxlength="255"
+						ng-pattern="/(https?:\/\/)(www)?[A-Za-z0-9.\-@_~]+\.[A-Za-z]{2,}(:[0-9]{2,5})?(\/[A-Za-z0-9\/_\-.~?&=]*)*/"
 						required'); ?> 
 						
 						<div class="help-block" ng-messages="projForm.td_doc_link.$error" ng-if="projForm.td_doc_link.$touched">
 						<p ng-message="minlength">Technical Design Link is too short. Mininum characters of 5.</p>
 						<p ng-message="maxlength">Technical Design Link is too long. Maximum characrers of 100.</p>
+						<p ng-message="pattern">Technical Design Link is not a valid URL</p>
 						<p ng-message="required">Technical Design Link is required.</p>
-						
+		
 						</div>
 					</div>
 					
 					<!--ENTRY_EXIT-->
 					
+					<label><span class="text-danger"><b>*</b></span> ENTRY-EXIT NAME</label>
 					<div class="form-group">
-						<input name="ee_doc_name" type="text" size="255" value="<?php echo $ee_name; ?>" class="form-control form-control-lg" readonly>
+						<input name="ee_doc_name" type="text" size="255" value="{{ee_name}}" class="form-control form-control-lg" readonly>
 					</div>
 					
 					<!--ENTRY_EXIT Link-->
@@ -164,11 +168,13 @@
 						<?php echo form_input('ee_doc_link', set_value('ee_doc_link'), 'class="form-control form-control-lg" ng-model="main.ee_doc_link"
 						ng-minlength="5"
 						ng-maxlength="255"
+						ng-pattern="/(https?:\/\/)(www)?[A-Za-z0-9.\-@_~]+\.[A-Za-z]{2,}(:[0-9]{2,5})?(\/[A-Za-z0-9\/_\-.~?&=]*)*/"
 						required'); ?> 
 						
 						<div class="help-block" ng-messages="projForm.ee_doc_link.$error" ng-if="projForm.ee_doc_link.$touched">
 						<p ng-message="minlength">Entry-Exit Link is too short. Mininum characters of 5.</p>
 						<p ng-message="maxlength">Entry-Exit Link is too long. Maximum characrers of 100.</p>
+						<p ng-message="pattern">Entry-Exit Link is not a valid URL</p>
 						<p ng-message="required">Entry-Exit Link is required.</p>
 						
 						</div>

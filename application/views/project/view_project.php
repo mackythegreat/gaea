@@ -67,21 +67,14 @@
 			<div class="row">
 			<div class="col-md-12">
 					<label>TECHNICAL DESIGN</label>
-					
-					<?php foreach($td_details as $td_items):?>
-						<ul>
-							<li><a href="<?php echo $td_items->td_doc_link?>"><?php echo $td_name . ' ver.' . $td_items->td_version ; ?></a></li>
-						</ul>
-					<?php endforeach;?>
+					<ul>
+						<?php foreach($td_details as $td_items):?>
+							<li><a href="<?php echo $td_items->td_doc_link?>"><?php echo $td_name . ' ver.' . $td_items->td_version; ?></a></li>
+						<?php endforeach;?>
+					</ul>
 				</div>
 			</div>
 			<hr />
-			
-			
-		
-		
-		
-		<hr />
 		
 		<!-- Back Button -->
 		<a href="javascript:history.go(-1)"class="btn btn-warning btn-block" > Back </a>

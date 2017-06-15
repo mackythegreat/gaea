@@ -118,8 +118,10 @@
 		
 		<hr />
 		
-	<?php endforeach;?> 
+		<?php endforeach;?> 
 	
+		<?php $ee_name = $p_name . ' - Entry-Exit Criteria'; ?>
+		
 			<div class="row">
 				
 				<!--START ENTRY-EXIT-->
@@ -131,7 +133,9 @@
 									<input type="text" required="required" name="ee_id" value="<?php echo $ee_items->ee_id?>" hidden >
 									
 									<label>ENTRY-EXIT NAME</label>
-									<input type="text" required="required" name="ee_doc_name" value="<?php echo $ee_items->ee_doc_name?>" readonly class="form-control form-control-lg">
+									<input type="text" required="required" name="ee_doc_name" 
+									value="<?php echo $ee_name; ?>" 
+									readonly class="form-control form-control-lg">
 				
 								</td>
 							</div>
@@ -257,6 +261,8 @@
 				var td_vr = document.createElement("INPUT");
 				var br = document.createElement("br");
 				
+				var re = new RegExp("/(https?:\/\/)(www)?[A-Za-z0-9.\-@_~]+\.[A-Za-z]{2,}(:[0-9]{2,5})?(\/[A-Za-z0-9\/_\-.~?&=]*)*/");
+				
 				td_ver++;
 				
 				p_id.setAttribute("type", "text");
@@ -279,6 +285,7 @@
 				td_link.setAttribute("name", "bx_td_doc_link[]");
 				td_link.setAttribute("placeholder", "Technical Design ver." + td_ver + " Link");
 				td_link.setAttribute("class","form-control form-control-lg");
+				
 				document.getElementById("tech_design").appendChild(td_link);
 				
 				td_vr.setAttribute("name", "bx_td_version[]");
