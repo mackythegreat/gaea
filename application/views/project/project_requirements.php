@@ -68,7 +68,7 @@
 					<?php if(empty($proj_req_tbl)) {?>	
 						<tr class="text-center">
 							<td colspan=10>No assigned requirements yet.</td>
-						</tr>
+						</tr> 
 					<?php } else { ?>
 				
 					<?php foreach ($proj_req_tbl as $item):?>
