@@ -24,7 +24,7 @@
 						   'Not Started' => 'Not Started',
 						   'In Progress' => 'In Progress',
 						   'Completed' => 'Completed'); ?>
-						   
+						
 	<?php $month = array (''   => 'All',
 						  '01'  => 'January',
 						  '02'  => 'February', 
@@ -48,7 +48,6 @@
 						 '2020' => '2020',
 						 '2021' => '2021'
 						 ); ?>
-						 
 		
 	<div class="container">
 		<div class="row">
@@ -75,7 +74,7 @@
 		<div class="col-md-12">
 		
 			<!-- Filter -->
-			<div class="small col-md-3">
+			<div class="small col-md-3 well">
 				<?php echo form_open('project/filter'); ?></p>
 					
 					<!-- Capability -->

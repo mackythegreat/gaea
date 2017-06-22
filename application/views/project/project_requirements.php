@@ -1,21 +1,56 @@
 <title>Project Requirements</title>
 
-<body>											
-	<div class="container">		
+<?php $status = array ('' => 'All',
+					   'Not Started' => 'Not Started',
+					   'In Progress' => 'In Progress',
+					   'Completed' => 'Completed'); ?>
+					   
+<?php $req_type = array (''  => 'All',
+					     '1' => 'UTP',
+					     '2' => 'CODE',
+					     '3' => 'UTE'); ?>
+					   
+<body>
+	<div class="container">
 		<div class="row">
-			<div class="small col-md-3 well">
-			
-				<!--addPRModal Placeholder-->
-				<button type="button" class="btn btn-info btn-block btn-warning" data-toggle="modal" data-target="#addPRModal" data-id='<?php echo $item->proj_req_id;?>'>Add New Requirement</button>
-				<?php $this->view('/modals/add_project_requirement');?>
-				<!--end of addPRModal Placeholder-->
-				
-				<hr />
-				
-				<?php if($this->session->flashdata('message')){ ?> <div class="alert alert-danger text-center"> <?php echo $this->session->flashdata('message'); } ?>
+			<div class="col-md-12">
+				<?php if($this->session->flashdata('message')){ ?> <div class="alert alert-success text-center"> <?php echo $this->session->flashdata('message'); ?> </div> <?php } ?>
 			</div>
-	
-			<div class="small col-md-9">
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<!--addPRModal Placeholder-->
+				<div style='margin-right: 15px; margin-lef:10px;'>
+				<button type="button" class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#addPRModal" data-id='<?php echo $item->proj_req_id;?>'>Add New Requirement</button>
+				<?php $this->view('/modals/add_project_requirement');?>
+				</div>
+				<!--end of addPRModal Placeholder-->
+			</div>
+			
+			<div> <br/><br/> </div>
+		</div>
+		
+		
+		
+		<div class="row">
+			<div class="col-md-12">
+				<!-- Filter -->
+				<div class="small col-md-3 well">
+					<!-- Requirement Type -->
+					<label><span class="text-danger"><b></b></span> Requirement Type</label><br />
+					<?php echo form_dropdown('req_type', $req_type, '', 'class="form-control form-control-lg" id="stat"'); ?> 
+					<br />
+					
+					<!-- Status -->
+					<label><span class="text-danger"><b></b></span> Status</label><br />
+					<?php echo form_dropdown('status_search', $status, '', 'class="form-control form-control-lg" id="stat"'); ?> 
+					<br />
+					
+					
+				</div>
+				
+				<div class="small col-md-9">
 				<table class= "table">
 					<thead>
 						<tr style="background-color:#333;color:#fff;">
@@ -24,7 +59,6 @@
 							<th>ASSIGNEE</th>
 							<th>POINTSHEET</th>
 							<th>REVIEWER</th>
-							<th>ASSIGNER</th>
 							<th>STATUS</th>
 							<th colspan = 3>ACTION</th>
 						</tr>
@@ -32,7 +66,7 @@
 
 					<tbody>
 					<?php if(empty($proj_req_tbl)) {?>	
-						<tr>
+						<tr class="text-center">
 							<td colspan=10>No assigned requirements yet.</td>
 						</tr>
 					<?php } else { ?>
@@ -45,7 +79,6 @@
 							<td><?php echo $item->assignee;?></td>
 							<td><?php if ($item->rvw_link){ echo anchor($item->rvw_link, $item->rvw_name, 'target="_blank"'); }?></td>
 							<td><?php echo $item->reviewer;?></td>
-							<td><?php echo $item->assigner;?></td>
 							
 							<?php 
 								switch($item->status)
@@ -77,6 +110,13 @@
 				</table>
 	
 				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			
+	
+			
 			</div>
 		</div>
 </body>
