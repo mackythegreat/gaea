@@ -6,8 +6,8 @@
 					   'Completed' => 'Completed'); ?>
 					   
 <?php $req_type = array (''  => 'All',
-					     '1' => 'UTP',
-					     '2' => 'CODE',
+					     '1' => 'CODE',
+					     '2' => 'UTP',
 					     '3' => 'UTE'); ?>
 					   
 <body>
@@ -55,10 +55,10 @@
 					<thead>
 						<tr style="background-color:#333;color:#fff;">
 							<th>REQUIREMENT</th>
-							<th>DOCUMENT</th>
-							<th>ASSIGNEE</th>
+							<th>TYPE</th>
+							<th>DOCUMENT NAME</th>
+							<th>CHECKLIST</th>
 							<th>POINTSHEET</th>
-							<th>REVIEWER</th>
 							<th>STATUS</th>
 							<th colspan = 3>ACTION</th>
 						</tr>
@@ -75,11 +75,11 @@
 					
 						<tr>
 							<td><?php echo $item->req_name;?></td>
-							<td><?php if ($item->doc_link){ echo anchor($item->doc_link, $item->doc_name, 'target="_blank"'); }?></td>
-							<td><?php echo $item->assignee;?></td>
-							<td><?php if ($item->rvw_link){ echo anchor($item->rvw_link, $item->rvw_name, 'target="_blank"'); }?></td>
-							<td><?php echo $item->reviewer;?></td>
-							
+							<td><?php echo $item->req_type;?></td>
+							<td><?php if ($item->doc_link){ echo anchor($item->doc_link, $item->doc_name, 'target="_blank"'); }else{ echo 'N/A'; }?></td>
+							<td><?php if ($item->chklist_name){ echo anchor($item->chklist_link, $item->chklist_name, 'target="_blank"'); }else{ echo 'N/A'; }?></td>
+							<td><?php if ($item->rev_link){ echo anchor($item->rev_link, $item->rev_name, 'target="_blank"'); }else{ echo 'N/A'; }?></td>
+						
 							<?php 
 								switch($item->status)
 								{
@@ -89,14 +89,8 @@
 									case "In Progress":
 										$class = 'class="bg-warning text-warning"';
 										break;
-									case "For Review":
-										$class = 'class="bg-info text-info"';
-										break;
-									case "Approved":
+									case "Completed":
 										$class = 'class="bg-success text-success"';
-										break;
-									case "Closed":
-										$class = 'class="bg-primary text-white"';
 									break;
 								}
 							?>

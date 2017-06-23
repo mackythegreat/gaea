@@ -225,7 +225,7 @@
 		}
 		
 		
-		public function get_all_proj_req($proj_id)
+		/*public function get_all_proj_req($proj_id)
 		{
 			if($proj_id != '')
 			{
@@ -255,12 +255,6 @@
 		
 		public function get_proj_req_dashbrd($id, $is_lead)
 		{
-			/*
-				$this->db->where('pr.status != ', 'Approved');
-				$this->db->where('pr.reviewer_id', $id);
-				$this->db->or_where('pr.assignee_id', $id); 
-			*/
-			
 			$team_id = '';
 			if($is_lead != 1)
 			{
@@ -280,12 +274,6 @@
 			
 			$this->db->select('pr.proj_req_id as proj_req_id, p.proj_name as proj_name, r.req_name as req_name, pr.doc_link as doc_link, pr.doc_name as doc_name, pr.rvw_link as rvw_link, pr.rvw_name as rvw_name, rev.eid as reviewer, asgnr.eid as assigner, asgne.eid as assignee, pr.status as status, pr.reviewer_id as rev_id, pr.assignee_id as assign_id', false);
 			$this->db->from('project_req as pr');
-				
-			/*
-				select team_id from users where id = $id;
-				select id from users where team_id = team_id(first query);
-				select * from proj_req where assignee_id = id OR reviewer_id = id;
-			*/
 			
 			$this->db->join('project as p', 'pr.proj_id = p.proj_id');
 			$this->db->join('req_type as r', 'r.req_type_id = pr.req_type_id');
@@ -330,7 +318,7 @@
 		{
 			$this->db->where('proj_req_id',$id);
 			$this->db->update('project_req',$data);
-		}
+		}*/
 		
 		/* Update Project */
 		public function update_project($id, $data) 

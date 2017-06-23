@@ -10,6 +10,7 @@
 			$this->load->library('form_validation');
 			$this->load->library('pagination');	
 			$this->load->model('mproject','m_project');
+			$this->load->model('mrequirements','m_requirements');
 			$this->load->model('muser','m_user'); 
 			$this->load->library('session');
 			$this->load->library('email'); 

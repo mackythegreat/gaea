@@ -141,10 +141,24 @@
 							</div>
 							
 							<div class="col-md-6">
+								<div class="form-group" ng-class="{ 'has-error': projForm.ee_doc_link.$touched && projForm.ee_doc_link.$invalid }">
 								<td>
-									<label for="tx_td_doc_link">ENTRY-EXIT LINK</label>
-									<input type="text" required="required" name="ee_doc_link" value="<?php echo $ee_items->ee_doc_link?>" class="form-control form-control-lg">
+									<label for="tx_ee_doc_link" ng-init="main.ee_doc_link='<?php echo $ee_items->ee_doc_link?>'">ENTRY-EXIT LINK</label>
+									<input type="text" required="required" name="ee_doc_link" value={{main.ee_doc_link}} class="form-control form-control-lg"
+									ng-model="main.ee_doc_link"
+									ng-minlength="5"
+									ng-maxlength="255"
+									ng-pattern="/(https?:\/\/)(www)?[A-Za-z0-9.\-@_~]+\.[A-Za-z]{2,}(:[0-9]{2,5})?(\/[A-Za-z0-9\/_\-.~?&=]*)*/"
+									required>
+									
+									<div class="help-block" ng-messages="projForm.ee_doc_link.$error" ng-if="projForm.ee_doc_link.$touched">
+										<p ng-message="minlength">Entry-Exit Link is too short. Mininum characters of 5.</p>
+										<p ng-message="maxlength">Entry-Exit Link is too long. Maximum characrers of 255.</p>
+										<p ng-message="pattern">Entry-Exit Link is not a valid URL</p>
+										<p ng-message="required">Entry-Exit Link is required.</p>
+									</div>
 								</td>
+								</div>
 							</div>
 						</tr>
 					</tbody>
@@ -156,12 +170,8 @@
 			</div>
 			
 			<hr />
-			
-			
-		
-			
+				
 		<?php $td_name = 'Accenture Intralot - '. $p_name . ' - Technical Design'; ?>
-		
 		
 		<div class="row">
 		<thead>
@@ -184,6 +194,7 @@
 				<tbody>
 					<tr>
 						<div class="col-md-6">
+						
 							<td>
 								<input type="text" required="required" name="tx_td_id[]" value="<?php echo $td_items->td_id?>" hidden>
 
@@ -196,11 +207,14 @@
 						</div>
 						
 						<div class="col-md-6">
-							<td>
-								<input type="text" required="required" name="tx_td_doc_link[]" class="form-control form-control-lg" value="<?php echo $td_items->td_doc_link?>">
-								<br>
-							</td>
+							<div class="form-group">
+								<td>
+									<input type="text" required="required" name="td_doc_link" value='<?php echo $td_items->td_doc_link?>' class="form-control form-control-lg">
+									<br>
+								</td>		
+							</div>
 						</div>
+						
 					</tr>
 				</tbody>
 			<?php endforeach;?>
@@ -220,7 +234,9 @@
 		<!-- Add Technical Design -->
 		<div class="row text-center">
 			<div class="col-md-12" style="display:inline-block; text-align:left; float:none;">
-				<p id="tech_design"></p>
+				<div class="form-group" ng-class="{ 'has-error': projForm.td_doc_link.$touched && projForm.td_doc_link.$invalid }">
+					<p id="tech_design"></p>
+				</div>
 			</div>
 		</div>
 		<!-- Add Technical Design -->
@@ -261,7 +277,7 @@
 				var td_vr = document.createElement("INPUT");
 				var br = document.createElement("br");
 				
-				var re = new RegExp("/(https?:\/\/)(www)?[A-Za-z0-9.\-@_~]+\.[A-Za-z]{2,}(:[0-9]{2,5})?(\/[A-Za-z0-9\/_\-.~?&=]*)*/");
+				//var re = new RegExp("/(https?:\/\/)(www)?[A-Za-z0-9.\-@_~]+\.[A-Za-z]{2,}(:[0-9]{2,5})?(\/[A-Za-z0-9\/_\-.~?&=]*)*/");
 				
 				td_ver++;
 				
@@ -285,6 +301,7 @@
 				td_link.setAttribute("name", "bx_td_doc_link[]");
 				td_link.setAttribute("placeholder", "Technical Design ver." + td_ver + " Link");
 				td_link.setAttribute("class","form-control form-control-lg");
+				td_link.setAttribute("ng-model","main.bx_td_doc_link");
 				
 				document.getElementById("tech_design").appendChild(td_link);
 				

@@ -132,7 +132,7 @@
 										title="View <?php echo $item->proj_name?>">
 										<span class='glyphicon glyphicon-eye-open'></span></a></td>
 										
-						<td><a href='<?php echo base_url().'project/show_project_requirements/'.$item->proj_id?>'
+						<td><a href='<?php echo base_url().'requirements/show_project_requirements/'.$item->proj_id?>'
 										class="btn btn-warning btn-lg btn-xs" data-toggle="tooltip" 
 										title="View <?php echo $item->proj_name?> Project Requirement">
 										<span class='glyphicon glyphicon-folder-open'></span></a></td>
