@@ -51,16 +51,17 @@
 				</div>
 				
 				<div class="small col-md-9">
-				<table class= "table" style="table-layout: fixed;">
+				<table class= "table" >
 					<thead>
 						<tr style="background-color:#333;color:#fff;">
-							<th colspan = 1>REQUIREMENT</th>
-							<th colspan = 1>TYPE</th>
-							<th colspan = 1>DOCUMENT</th>
-							<th colspan = 1>CHECKLIST</th>
-							<th colspan = 1>POINTSHEET</th>
-							<th colspan = 1>OWNER</th>
-							<th colspan = 1>STATUS</th>
+							<th>REQUIREMENT</th>
+							<th>TYPE</th>
+							<th>DOCUMENT</th>
+							<th>CHECKLIST</th>
+							<th>POINTSHEET</th>
+							<th>OWNER</th>
+							<th>REVIEWER</th>
+							<th>STATUS</th>
 							<th colspan = 4>ACTION</th>
 						</tr>
 					</thead>
@@ -80,7 +81,8 @@
 							<td><?php if ($item->doc_link){ echo anchor($item->doc_link, $item->doc_name, 'target="_blank"'); }else{ echo 'N/A'; }?></td>
 							<td><?php if ($item->chklist_name){ echo anchor($item->chklist_link, $item->chklist_name, 'target="_blank"'); }else{ echo 'N/A'; }?></td>
 							<td><?php if ($item->rev_link){ echo anchor($item->rev_link, $item->rev_name, 'target="_blank"'); }else{ echo 'N/A'; }?></td>
-							<td  style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><?php if($item->assignee){echo $item->assignee;}?></td>
+							<td  style="overflow: hidden; text-overflow: ellipsis;"><?php if($item->assignee){echo $item->assignee;}?></td>
+							<td  style="overflow: hidden; text-overflow: ellipsis;"><?php if($item->reviewer){echo $item->reviewer;}?></td>
 							<?php 
 								switch($item->status)
 								{
