@@ -20,6 +20,7 @@
 		<script type="text/javascript" src='<?php echo base_url();?>jquery.validate.min.js'></script>
 		<script type="text/javascript" src='<?php echo base_url();?>angular/angular.min.js'></script>
 		<script type="text/javascript" src='<?php echo base_url();?>angular/gqm_validation.js'></script>
+		<script type="text/javascript" src='<?php echo base_url();?>angular/other_gqm_validation.js'></script>
 		<script type="text/javascript" src='<?php echo base_url();?>angular/angular-messages.js'></script>
 		<script type="text/javascript" src='<?php echo base_url();?>gqm_custom_lib.js'></script>
 		<script>$(document).ready(function(){    $('[data-toggle="tooltip"]').tooltip();   });</script>
@@ -49,11 +50,8 @@
 					<li><a href='<?php echo base_url();?>./user/display_users'><span class="glyphicon glyphicon-user"></span> Manage Users</a></li>	
 				<?php } ?>
 					
-				<?php if(($this->session->userdata('is_admin') != 0) || ($this->session->userdata('user_type') != "User") || ($this->session->userdata('is_qa_rep') != 0)) {?>
-					<li><a href='<?php echo base_url();?>./project/display_projects'><span class="glyphicon glyphicon-tasks"></span> Manage Projects</a></li>
-					<li role="separator" class="divider"></li>
-				<?php }?>
-				
+				<li><a href='<?php echo base_url();?>./project/display_projects'><span class="glyphicon glyphicon-tasks"></span> Manage Projects</a></li>
+				<li role="separator" class="divider"></li>
 				
 				<li><a href='<?php echo base_url();?>./user/change_password'><span class="glyphicon glyphicon-cog"></span> Change Password</a></li>
 				<li><a href='<?php echo base_url();?>./login/logout'><span class="glyphicon glyphicon-off"></span> Logout</a></li>

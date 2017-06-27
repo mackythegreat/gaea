@@ -78,9 +78,11 @@
 				<?php echo form_open('project/filter'); ?></p>
 					
 					<!-- Capability -->
+					<?php if($this->session->userdata('user_type') != 'User') {?>
 					<label><span class="text-danger"><b></b></span> Capability</label><br />
 					<?php echo form_dropdown('capability_search', $capability, '', 'class="form-control form-control-lg" id="capab"'); ?>
 					<br />
+					<?php }?>
 					
 					<!-- Status -->
 					<label><span class="text-danger"><b></b></span> Status</label><br />
@@ -146,6 +148,8 @@
 											class="btn btn-danger btn-lg btn-xs" data-toggle="tooltip" 
 											title="Delete <?php echo $item->proj_name?>">
 											<span class='glyphicon glyphicon-remove-circle'></span></a></td>
+											
+											
 					</tr>
 				</tbody>
 				<?php endforeach;?>

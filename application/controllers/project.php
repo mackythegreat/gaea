@@ -154,8 +154,8 @@
 		
 		public function display_projects() 
 		{
-			if(($this->session->userdata('user_type') == 'Lead') || ($this->session->userdata('is_admin') != 0) || ($this->session->userdata('is_qa_rep') != 0))
-			{				
+			//if(($this->session->userdata('user_type') == 'Lead') || ($this->session->userdata('is_admin') != 0) || ($this->session->userdata('is_qa_rep') != 0))
+			//{				
 				$config = array();				
 				$config['base_url'] = site_url('project/display_projects');
 
@@ -211,35 +211,40 @@
 				$this->load->view('template/header');
 				$this->load->view('project/display_projects',$data);
 				$this->load->view('template/footer');
-			}
+			/*}
 			else
 			{
 				$this->session->set_flashdata('message','You are not allowed to view this page!');
 				redirect('user/user_dashboard');
-			}
+			}*/
 		}
 		
 		public function filter()
 		{
-			if(($this->session->userdata('user_type') == 'Lead') || ($this->session->userdata('is_admin') != 0) || ($this->session->userdata('is_qa_rep') != 0))
-			{
+			//if(($this->session->userdata('user_type') == 'Lead') || ($this->session->userdata('is_admin') != 0) || ($this->session->userdata('is_qa_rep') != 0))
+			//{
 				/*$id = $this->session->userdata('id');
 				$usr_row = $this->m_user->get_user_details($id);
 				$user_data['user_detail'] = $usr_row->result();*/
 				
 				// if the user_type is lead, just display its respective resource capability_search
-				if($this->session->userdata('user_type') == 'Lead' && ($this->session->userdata('is_admin') != 1)) 
+				/*if($this->session->userdata('user_type') == 'Lead' && ($this->session->userdata('is_admin') != 1)) 
 				{ 
 					$capabiltity_search = $this->session->userdata('team_id');
 					$status_search = '';
 				}
 				else
-				{
-					$capabiltity_search = ($this->input->post("capability_search"))? $this->input->post("capability_search") : 0;
+				{*/
+					if($this->session->userdata('is_qa_rep') == 1){
+						$capabiltity_search = ($this->input->post("capability_search"))? $this->input->post("capability_search") : 0;
+					}else{
+						$capabiltity_search = $this->session->userdata('team_id');
+					} 
+					
 					$status_search = ($this->input->post("status_search"))? $this->input->post("status_search") : 0;
 					$month_search = ($this->input->post("month_search"))? $this->input->post("month_search") : 0;
 					$year_search = ($this->input->post("year_search"))? $this->input->post("year_search") : 0;
-				}
+				//}
 
 				// pagination settings
 				$config = array();
@@ -270,6 +275,7 @@
 				$config['num_tag_open'] = '<li>';
 				$config['num_tag_close'] = '</li>';
 				$this->pagination->initialize($config);
+				
 
 				$data['page'] = ($this->uri->segment(7)) ? $this->uri->segment(7) : 0;
 				$project_result = $this->m_project->get_all_projects($config['per_page'], $data['page'], $capabiltity_search,$status_search, $month_search, $year_search);
@@ -281,12 +287,12 @@
 				$this->load->view('project/display_projects',$data);
 				$this->load->view('template/footer');
 				
-			}
+			/*}
 			else
 			{
 				$this->session->set_flashdata('message','You are not allowed to view this page!');
 				redirect('user/user_dashboard');
-			}
+			}*/
 		}
 		
 		

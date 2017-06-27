@@ -36,6 +36,24 @@
 		
 		public function show_project_requirements($proj_id) 
 		{		
+			// forbidden jutsu! :)
+			// did this just to get the project name to be placed inside the modal
+			$this->db->select('p_name, p_id');
+			$this->db->from('tb_project');
+			$this->db->where('p_id',$proj_id);
+			$query = $this->db->get();
+			$data['proj_name'] = $query->result();
+			
+			$this->db->select('id, eid');
+			$this->db->from('user');
+			if($this->session->userdata('is_admin') != 1)
+			{
+				$this->db->where('team_id', $this->session->userdata('team_id'));
+			}
+			$this->db->where('is_active !=', 0);
+			$query = $this->db->get();
+			$data['eid'] = $query->result();
+		
 			$config = array();				
 			$config['base_url'] = site_url('requirements/show_project_requirements/'.$proj_id);
 
