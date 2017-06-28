@@ -12,6 +12,8 @@
 		<link rel="stylesheet" href='<?php echo base_url();?>datepicker/css/bootstrap-datepicker3.standalone.css' type="text/css"/> 
 		<link rel="stylesheet" href='<?php echo base_url();?>datepicker/css/bootstrap-datepicker3.standalone.min.css' type="text/css"/> 
 		
+		<link rel="stylesheet" type="text/css" href='<?php echo base_url();?>bootstrap/css/gqmstyle.css'>
+		
 		<script type="text/javascript" src='<?php echo base_url();?>bootstrap/js/jquery.js'></script>
 		<script type="text/javascript" src='<?php echo base_url();?>bootstrap/js/bootstrap.min.js'></script>
 		<script type="text/javascript" src="<?php echo base_url();?>datepicker/js/bootstrap-datepicker.js" charset="utf-8"></script>
@@ -26,11 +28,18 @@
 		<script>$(document).ready(function(){    $('[data-toggle="tooltip"]').tooltip();   });</script>
 		<!--End Style Sheet Area-->
 		
+		
+		
+		<!-- End Test CSS -->
+		
+		
 	</head>
 	
 	<nav class="navbar navbar-light navbar-static-top" style="background-color: #333">
 		<h3 style="margin-left:70px">
+			
 			<font color="#fff" style="font-weight: bold">Gaea Quality Manager</font>
+			
 			
 			<?php if($this->session->userdata('eid')) { ?>
 			<span class="dropdown pull-right" style="margin-right:100px;">

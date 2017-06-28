@@ -26,18 +26,44 @@
 					<br />
 					
 					<label>REQUIREMENT TYPE</label><br />
-					<ul style="list-style: none;">
-						<li><input type="checkbox" ng-model="code" > CODE</li>
-						<li><input type="checkbox" ng-model="utp" > UTP</li>
-						<li><input type="checkbox" ng-model="ute" > UTE</li>
-					</ul>
+					
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" value="" ng-model="code" checked style="font-size: 1.5em">
+							<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+							CODE
+						</label>
+					</div>
+					
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" value="" ng-model="utp" checked >
+							<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+							UTP
+						</label>
+					</div>
+					
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" value="" ng-model="ute" checked >
+							<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+							UTE
+						</label>
+					</div>
+					<hr />
+				
 				</div>
+				
+				
 			</div>
 			
 			<!--CODE-->
-			<div class="check-element animate-show-hide" ng-show="code" ng-controller="CodeCtrl">
-			<hr />
-			<label> CODE </label>
+			<div class="well check-element animate-show-hide" ng-show="code" ng-controller="CodeCtrl">
+			<div class="text-center" style="background-color:#333;color:#fff;">
+				<label> CODE </label>
+				
+			</div>
+			<br />
 			<div class="row">
 				
 				<div class="col-md-12">
@@ -100,17 +126,24 @@
 				<button class="btn btn-success addfields" ng-click="addNewRev()">Add Reviewer</button>
 				
 				</div>
-					
+				
+				
 			</div>
-			
+			<hr />
 			<br />
 			
 			</div>
 			<!--END OF CODE-->
+			
+			
 			<!--UTP-->
-			<div class="check-element animate-show-hide" ng-show="utp" ng-controller="UTPCtrl">
-			<hr />
-			<label> UTP </label>
+			<div class="well check-element animate-show-hide" ng-show="utp" ng-controller="UTPCtrl">
+			
+			<div class="text-center" style="background-color:#333;color:#fff;">
+				<label> UTP </label>
+			</div>
+			<br />
+			
 			<div class="row">
 				
 				<div class="col-md-12">
@@ -176,15 +209,18 @@
 					
 			</div>
 			
-			<br />
+			<hr />
 			
 			</div>
 			<!--END OF UTE-->
 			
 			<!--UTE-->
-			<div class="check-element animate-show-hide" ng-show="ute" ng-controller="UTECtrl">
-			<hr />
-			<label> UTE </label>
+			<div class="well check-element animate-show-hide" ng-show="ute" ng-controller="UTECtrl">
+			<div class="text-center" style="background-color:#333;color:#fff;">
+				<label> UTE </label>
+				
+			</div>
+			<br />
 			<div class="row">
 				
 				<div class="col-md-12">
@@ -250,6 +286,7 @@
 					
 			</div>
 			
+			<hr />
 			<br />
 			
 			</div>
@@ -258,7 +295,7 @@
 			
         </div>
         <div class="modal-footer">
-			<?php echo form_submit('submit','Create','class="btn btn-info"');?>
+			<?php echo form_submit('submit','Create','class="btn btn-info popover-test"');?>
 			<?php echo form_close(); ?>
           <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
         </div>
