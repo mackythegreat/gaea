@@ -146,8 +146,9 @@
 				
 				return $query;
 			}
-			$this->session->set_flashdata('message','No Project/s found!');
-			redirect('project/display_projects','refresh');
+			else{
+				return FALSE;
+			}
 		}
 		
 		public function proj_count($capabiltity_search='', $status_search='', $month_search='', $year_search='') {

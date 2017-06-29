@@ -152,10 +152,7 @@
 			
 		}
 		
-		public function display_projects() 
-		{
-			//if(($this->session->userdata('user_type') == 'Lead') || ($this->session->userdata('is_admin') != 0) || ($this->session->userdata('is_qa_rep') != 0))
-			//{				
+		public function display_projects() {	
 				$config = array();				
 				$config['base_url'] = site_url('project/display_projects');
 
@@ -199,24 +196,24 @@
 				$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 				
 				$team_id = '';
-				if($this->session->userdata('is_admin') != 1)
-				{
+				if($this->session->userdata('is_admin') != 1){
 					$team_id = $this->session->userdata('team_id');
 				}
 
 				$projects_result = $this->m_project->get_all_projects($config["per_page"], $page, $team_id, '', '', '');
-				$data["projects_table"] = $projects_result->result();
+				if($projects_result != FALSE){
+					$data["projects_table"] = $projects_result->result();
+				}else{
+					$data["projects_table"] = FALSE;
+				}
+				
+				
 				$data["pagination"] = $this->pagination->create_links();
 
 				$this->load->view('template/header');
 				$this->load->view('project/display_projects',$data);
 				$this->load->view('template/footer');
-			/*}
-			else
-			{
-				$this->session->set_flashdata('message','You are not allowed to view this page!');
-				redirect('user/user_dashboard');
-			}*/
+		
 		}
 		
 		public function filter()

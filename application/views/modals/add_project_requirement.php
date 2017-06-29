@@ -1,3 +1,7 @@
+<?php $status = array ( 'Not Started' => 'Not Started',
+						'In Progress' => 'In Progress',
+						'Completed' => 'Completed'); ?>
+
 <!-- Modal -->
   <div class="modal fade" id="addPRModal" role="dialog">
     <div class="modal-dialog">
@@ -14,11 +18,13 @@
 		
 			
 			<?php echo form_open_multipart('requirements/add_project_requirements'); ?>
+			
 			<?php echo form_hidden('p_id', $item->p_id); ?>
 			<?php echo form_hidden('assigner_id', $this->session->userdata('id'));?>
 			
 			<div class="row">
 				<div class="col-md-12">
+					
 					<label>REQUIREMENT NAME</label>				
 					<?php echo form_input('req_name', set_value('req_name'),'class="form-control"'); ?>
 						<?php echo form_error('req_name'); ?>
@@ -29,15 +35,16 @@
 					
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" value="" ng-model="code" checked style="font-size: 1.5em">
+							<input type="checkbox" ng-init="code=false" ng-model="code" checked style="font-size: 1.5em" name="cb_code" value="{{code}}">
 							<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
 							CODE
 						</label>
 					</div>
+
 					
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" value="" ng-model="utp" checked >
+							<input type="checkbox" ng-init="utp=false" ng-model="utp" name="cb_utp" checked value="{{utp}}">
 							<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
 							UTP
 						</label>
@@ -45,9 +52,10 @@
 					
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" value="" ng-model="ute" checked >
+							<input type="checkbox" ng-init="ute=false" ng-model="ute" name="cb_ute" checked value="{{ute}}" >
 							<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
 							UTE
+							
 						</label>
 					</div>
 					<hr />
@@ -67,9 +75,10 @@
 			<div class="row">
 				
 				<div class="col-md-12">
-					<label>STATUS</label>
-					<?php echo form_dropdown('status', $this->db->enum_select('project_req','status'),'','class="form-control"'); ?>
-					<input type="text" ng-model="item.dev" name="" placeholder="Developer" required hidden>
+					<!-- Status -->
+					<label><span class="text-danger"><b></b></span> Status</label><br />
+					<?php echo form_dropdown('code_status', $status, '', 'class="form-control form-control-lg" id="stat"'); ?> 
+					<br />
 				</div>
 			</div>
 				
@@ -83,7 +92,7 @@
 				<fieldset  data-ng-repeat="dev_item in dev_list">
 					<div class="input-group">
 					
-						<select class="form-control col-xs-5" name="assignee_id[]" ng-model="dev_item.dev" >
+						<select class="form-control col-xs-5" name="code_assignee[]" ng-model="dev_item.dev" >
 							<?php foreach($eid as $assignee){ 
 							echo '<option value="'.$assignee->id.'">'.$assignee->eid.'</option>';
 						}?> </select>
@@ -92,12 +101,12 @@
 							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeDev()"><span
 							class="glyphicon glyphicon-remove"></span></button>
 						</span>
+					
 					</div>
 					<br />
 				</fieldset>
-				
 				<br />
-				<button class="btn btn-success addfields" ng-click="addNewDev()">Add Assignee</button>
+				<a href="#" class="btn btn-success addfields" ng-click="addNewDev()" role="button">Add Assignee</a>
 				
 				</div>
 				
@@ -106,10 +115,8 @@
 				</div>
 				<div class="col-md-6">
 				<fieldset  data-ng-repeat="rev_item in rev_list">
-					
-					
 					<div class="input-group">
-						<select class="form-control" name="assignee_id[]" ng-model="rev_item.rev">
+						<select class="form-control" name="code_reviewer[]" ng-model="rev_item.rev">
 							<?php foreach($eid as $assignee){ 
 							echo '<option value="'.$assignee->id.'">'.$assignee->eid.'</option>';
 						}?> </select>
@@ -121,9 +128,9 @@
 					</div>
 					<br />					
 				</fieldset>
-				
+			
 				<br />
-				<button class="btn btn-success addfields" ng-click="addNewRev()">Add Reviewer</button>
+				<a href="#" class="btn btn-success addfields" ng-click="addNewRev()" role="button">Add Reviewer</a>
 				
 				</div>
 				
@@ -147,9 +154,10 @@
 			<div class="row">
 				
 				<div class="col-md-12">
-					<label>STATUS</label>
-					<?php echo form_dropdown('status', $this->db->enum_select('project_req','status'),'','class="form-control"'); ?>
-					<input type="text" ng-model="item.dev" name="" placeholder="Developer" required hidden>
+					<!-- Status -->
+					<label><span class="text-danger"><b></b></span> Status</label><br />
+					<?php echo form_dropdown('utp_status', $status, '', 'class="form-control form-control-lg" id="stat"'); ?> 
+					<br />
 				</div>
 			</div>
 				
@@ -163,7 +171,7 @@
 				<fieldset  data-ng-repeat="dev_item in dev_list">
 					<div class="input-group">
 					
-						<select class="form-control col-xs-5" name="assignee_id[]" ng-model="dev_item.dev" >
+						<select class="form-control col-xs-5" name="utp_assignee[]" ng-model="dev_item.dev" >
 							<?php foreach($eid as $assignee){ 
 							echo '<option value="'.$assignee->id.'">'.$assignee->eid.'</option>';
 						}?> </select>
@@ -177,7 +185,7 @@
 				</fieldset>
 				
 				<br />
-				<button class="btn btn-success addfields" ng-click="addNewDev()">Add Assignee</button>
+				<a href="#" class="btn btn-success addfields" ng-click="addNewDev()" role="button">Add Assignee</a>
 				
 				</div>
 				
@@ -189,7 +197,7 @@
 					
 					
 					<div class="input-group">
-						<select class="form-control" name="assignee_id[]" ng-model="rev_item.rev">
+						<select class="form-control" name="utp_reviewer[]" ng-model="rev_item.rev">
 							<?php foreach($eid as $assignee){ 
 							echo '<option value="'.$assignee->id.'">'.$assignee->eid.'</option>';
 						}?> </select>
@@ -203,7 +211,7 @@
 				</fieldset>
 				
 				<br />
-				<button class="btn btn-success addfields" ng-click="addNewRev()">Add Reviewer</button>
+				<a href="#" class="btn btn-success addfields" ng-click="addNewRev()" role="button">Add Reviewer</a>
 				
 				</div>
 					
@@ -224,9 +232,10 @@
 			<div class="row">
 				
 				<div class="col-md-12">
-					<label>STATUS</label>
-					<?php echo form_dropdown('status', $this->db->enum_select('project_req','status'),'','class="form-control"'); ?>
-					<input type="text" ng-model="item.dev" name="" placeholder="Developer" required hidden>
+					<!-- Status -->
+					<label><span class="text-danger"><b></b></span> Status</label><br />
+					<?php echo form_dropdown('ute_status', $status, '', 'class="form-control form-control-lg" id="stat"'); ?> 
+					<br />
 				</div>
 			</div>
 				
@@ -240,7 +249,7 @@
 				<fieldset  data-ng-repeat="dev_item in dev_list">
 					<div class="input-group">
 					
-						<select class="form-control col-xs-5" name="assignee_id[]" ng-model="dev_item.dev" >
+						<select class="form-control col-xs-5" name="ute_assignee[]" ng-model="dev_item.dev" >
 							<?php foreach($eid as $assignee){ 
 							echo '<option value="'.$assignee->id.'">'.$assignee->eid.'</option>';
 						}?> </select>
@@ -254,7 +263,8 @@
 				</fieldset>
 				
 				<br />
-				<button class="btn btn-success addfields" ng-click="addNewDev()">Add Assignee</button>
+				
+				<a href="#" class="btn btn-success addfields" ng-click="addNewDev()" role="button">Add Assignee</a>
 				
 				</div>
 				
@@ -266,7 +276,7 @@
 					
 					
 					<div class="input-group">
-						<select class="form-control" name="assignee_id[]" ng-model="rev_item.rev">
+						<select class="form-control" name="ute_reviewer[]" ng-model="rev_item.rev">
 							<?php foreach($eid as $assignee){ 
 							echo '<option value="'.$assignee->id.'">'.$assignee->eid.'</option>';
 						}?> </select>
@@ -280,7 +290,7 @@
 				</fieldset>
 				
 				<br />
-				<button class="btn btn-success addfields" ng-click="addNewRev()">Add Reviewer</button>
+				<a href="#" class="btn btn-success addfields" ng-click="addNewRev()" role="button">Add Reviewer</a>
 				
 				</div>
 					

@@ -1,8 +1,11 @@
 var myApp = angular.module('app', []);
+
   myApp.controller('CodeCtrl', function($scope) {
 
   $scope.dev_list = [{id: 'dev1'}];
   $scope.rev_list = [{id: 'rev1'}];
+  
+  $scope.item = $scope.dev_list.length;
   
   $scope.addNewDev = function() {
     var newItemNo = $scope.dev_list.length+1;

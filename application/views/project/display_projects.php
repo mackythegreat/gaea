@@ -117,10 +117,14 @@
 						<th class="text-center">STATUS</th>
 						<th colspan = 4  class="text-center">ACTION</th>
 					</tr>
+					
 				</thead>
+				<tbody>
+				
+				<?php if($projects_table != FALSE) {?>
 				
 				<?php foreach ($projects_table as $item):?>
-				<tbody>
+				
 					<tr>
 						<td class="text-center"><?php echo $item->proj_name;?></td>
 						<td class="text-center"><?php echo $item->team;?></td>
@@ -151,12 +155,15 @@
 											
 											
 					</tr>
-				</tbody>
+				
 				<?php endforeach;?>
+				<?php } else { ?> <td>No Projects available</td> <?php }?>
+				</tbody>
 				</table>
 			<div style="text-align:center">
 				<?php if($pagination != false ) { echo $pagination; }	?>
 			</div>
+				
 		</div>
 		</div>
 		</div>
