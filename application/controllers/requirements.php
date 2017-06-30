@@ -42,7 +42,7 @@
 				
 				$data['p_req_id'] = $p_req_id;
 				$data['p_id'] = $this->input->post('p_id');
-				$data['req_name'] = $this->input->post('p_name');
+				$data['req_name'] = $this->input->post('req_name');
 				$this->m_requirements->insert_proj_req($data);
 				
 				// Insert requirement document
@@ -72,7 +72,7 @@
 						);
 						
 						if($cd_dev_arr['assignee_id'] != null){
-							$this->m_project->insert_dev_rev($cd_dev_arr);	
+							$this->m_requirements->insert_dev_rev($cd_dev_arr);	
 						}
 					}
 					//REV
@@ -90,15 +90,15 @@
 						);
 						
 						if($cd_rev_arr['reviewer_id'] != null){
-							$this->m_project->insert_dev_rev($cd_rev_arr);	
+							$this->m_requirements->insert_dev_rev($cd_rev_arr);	
 						}
 					}
 				}
-				else if($this->input->post('cb_utp') != false)
+				if($this->input->post('cb_utp') != false)
 				{
 					$utp['p_req_id'] = $p_req_id;
 					$utp['rt_id'] = 2;
-					$utp['status'] = $this->input->post('code_status');
+					$utp['status'] = $this->input->post('utp_status');
 					$this->m_requirements->insert_req_doc($utp);
 					
 					// Get the requirement doc_id
@@ -120,7 +120,7 @@
 						);
 						
 						if($utp_dev_arr['assignee_id'] != null){
-							$this->m_project->insert_dev_rev($utp_dev_arr);	
+							$this->m_requirements->insert_dev_rev($utp_dev_arr);	
 						}
 					}
 					//REV
@@ -138,15 +138,15 @@
 						);
 						
 						if($utp_rev_arr['reviewer_id'] != null){
-							$this->m_project->insert_dev_rev($utp_rev_arr);	
+							$this->m_requirements->insert_dev_rev($utp_rev_arr);	
 						}
 					}
 				}
-				else if($this->input->post('cb_ute') != false)
+				if($this->input->post('cb_ute') != false)
 				{
 					$ute['p_req_id'] = $p_req_id;
 					$ute['rt_id'] = 3;
-					$ute['status'] = $this->input->post('code_status');
+					$ute['status'] = $this->input->post('ute_status');
 					$this->m_requirements->insert_req_doc($ute);
 					
 					// Get the requirement doc_id
@@ -168,7 +168,7 @@
 						);
 						
 						if($ute_dev_arr['assignee_id'] != null){
-							$this->m_project->insert_dev_rev($ute_dev_arr);	
+							$this->m_requirements->insert_dev_rev($ute_dev_arr);	
 						}
 					}
 					//REV
@@ -186,7 +186,7 @@
 						);
 						
 						if($ute_reviewer['reviewer_id'] != null){
-							$this->m_project->insert_dev_rev($ute_reviewer);	
+							$this->m_requirements->insert_dev_rev($ute_reviewer);	
 						}
 					}
 				}
@@ -275,6 +275,14 @@
 			$status_search = ($this->input->post("status_search"))? $this->input->post("status_search") : 0;
 			$proj_id = ($this->input->post("proj_id"))? $this->input->post("proj_id") : 0;
 			
+			
+			// forbidden jutsu! :)
+			// did this just to get the project name to be placed inside the modal
+			$this->db->select('p_name, p_id');
+			$this->db->from('tb_project');
+			$this->db->where('p_id',$proj_id);
+			$query = $this->db->get();
+			$data['proj_name'] = $query->result();
 
 			// pagination settings
 			$config = array();
