@@ -283,6 +283,16 @@
 			$this->db->where('p_id',$proj_id);
 			$query = $this->db->get();
 			$data['proj_name'] = $query->result();
+			
+			$this->db->select('id, eid');
+			$this->db->from('user');
+			if($this->session->userdata('is_admin') != 1)
+			{
+				$this->db->where('team_id', $this->session->userdata('team_id'));
+			}
+			$this->db->where('is_active !=', 0);
+			$query = $this->db->get();
+			$data['eid'] = $query->result();
 
 			// pagination settings
 			$config = array();

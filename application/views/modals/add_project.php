@@ -35,7 +35,7 @@
 						<?php $p_name = "{{main.p_name}}";?>
 					
 						<div class="help-block" ng-messages="projForm.p_name.$error" ng-if="projForm.p_name.$touched">
-						<p ng-message="minlength">Project Name is too short. Mininum characters of 5.</p>
+						<p ng-message="minlength">Project Name is too short. Mininum characters of 1 .</p>
 						<p ng-message="maxlength">Project Name is too long. Maximum characrers of 50.</p>
 						<p ng-message="required">Project Name is required.</p>
 						</div>
@@ -116,8 +116,9 @@
 							});
 						</script>
 		
-						<div span class="text-danger">{{errMessage}}</div>
+						
 						<div class="help-block" ng-messages="projForm.p_end_dt.$error" ng-if="projForm.p_end_dt.$touched">
+							<div span class="text-danger">{{errMessage}}</div>
 							<p ng-message="required">End Date is required.</p>
 						</div>
 						</div>

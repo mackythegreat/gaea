@@ -14,10 +14,10 @@
 				<?php foreach ($proj_name as $item): endforeach; ?>
 				<h4 class="modal-title">ADD REQUIREMENT - <?php echo $item->p_name; ?></h4>
 		  </div>
-        <div class="modal-body">
+        <div class="modal-body" ng-controller="MainCtrl as main">
 		
 			
-			<?php echo form_open_multipart('requirements/add_project_requirements'); ?>
+			<?php echo form_open_multipart('requirements/add_project_requirements','name="reqForm" novalidate'); ?>
 			
 			<?php echo form_hidden('p_id', $item->p_id); ?>
 			<?php echo form_hidden('assigner_id', $this->session->userdata('id'));?>
@@ -25,12 +25,20 @@
 			<div class="row">
 				<div class="col-md-12">
 					
-					<label>REQUIREMENT NAME</label>				
-					<?php echo form_input('req_name', set_value('req_name'),'class="form-control"'); ?>
-						<?php echo form_error('req_name'); ?>
-					
-					<br />
-					
+					<div class="form-group" ng-class="{ 'has-error': reqForm.req_name.$touched && reqForm.req_name.$invalid }">
+						<label><span class="text-danger"><b>*</b></span> REQUIREMENT NAME</label>	
+						<?php echo form_input('req_name', set_value('req_name'),'class="form-control" ng-model="main.req_name" ng-minlength="2"
+						ng-maxlength="50"
+						required'); ?>
+						
+						<br />
+						<div class="help-block" ng-messages="reqForm.req_name.$error" ng-if="reqForm.req_name.$touched">
+							<p ng-message="minlength">Requirement Name is too short. Mininum characters of 2.</p>
+							<p ng-message="maxlength">Requirement Name is too long. Maximum characrers of 50.</p>
+							<p ng-message="required">Requirement Name is required.</p>
+						</div>
+					</div>
+						
 					<label>REQUIREMENT TYPE</label><br />
 					
 					<div class="checkbox">
@@ -84,32 +92,37 @@
 				
 			<br />
 			
-			<div class="row">
+			<div class="row" ng-init="hello">
 				<div class="col-md-6">
 				<div>
 						<label>ASSIGNEE</label>
 				</div>
+				
 				<fieldset  data-ng-repeat="dev_item in dev_list">
+				
 					<div class="input-group">
 					
 						<select class="form-control col-xs-5" name="code_assignee[]" ng-model="dev_item.dev" >
-							<?php foreach($eid as $assignee){ 
-							echo '<option value="'.$assignee->id.'">'.$assignee->eid.'</option>';
+							<?php foreach($eid as $assignee){
+								echo '<option value="'.$assignee->id.'">'.$assignee->eid.'</option>';
 						}?> </select>
-					
+						
 						<span class="input-group-btn">
-							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeDev()"><span
+							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeDev()" ng-model="item_dev" ng-disabled="item_dev <=1"><span
 							class="glyphicon glyphicon-remove"></span></button>
-						</span>
-					
+						</span>			
 					</div>
-					<br />
+					
+					
+					<br >
+			
 				</fieldset>
+				
 				<br />
-				<a href="#" class="btn btn-success addfields" ng-click="addNewDev()" role="button">Add Assignee</a>
+				<a href="#" class="btn btn-success addfields" ng-click="addNewDev()" role="button" ng-disabled="">Add Assignee</a>
 				
 				</div>
-				
+
 				<div>
 					<label>REVIEWER</label>
 				</div>
