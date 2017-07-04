@@ -7,16 +7,16 @@
     <div class="modal-dialog">
     
       <!-- Modal content-->
-      <div class="modal-content">
+      <div class="modal-content" ng-controller="MainCtrl">
 		
 			<div class="modal-header" style="background-color:#333;color:#fff;">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<?php foreach ($proj_name as $item): endforeach; ?>
 				<h4 class="modal-title">ADD REQUIREMENT - <?php echo $item->p_name; ?></h4>
 		  </div>
-        <div class="modal-body" ng-controller="MainCtrl as main">
+        <div class="modal-body" >
 		
-			
+		
 			<?php echo form_open_multipart('requirements/add_project_requirements','name="reqForm" novalidate'); ?>
 			
 			<?php echo form_hidden('p_id', $item->p_id); ?>
@@ -27,7 +27,7 @@
 					
 					<div class="form-group" ng-class="{ 'has-error': reqForm.req_name.$touched && reqForm.req_name.$invalid }">
 						<label><span class="text-danger"><b>*</b></span> REQUIREMENT NAME</label>	
-						<?php echo form_input('req_name', set_value('req_name'),'class="form-control" ng-model="main.req_name" ng-minlength="2"
+						<?php echo form_input('req_name', set_value('req_name'),'class="form-control" ng-model="req_name" ng-minlength="2"
 						ng-maxlength="50"
 						required'); ?>
 						
@@ -38,7 +38,7 @@
 							<p ng-message="required">Requirement Name is required.</p>
 						</div>
 					</div>
-						
+					
 					<label>REQUIREMENT TYPE</label><br />
 					
 					<div class="checkbox">
@@ -67,9 +67,7 @@
 						</label>
 					</div>
 					<hr />
-				
 				</div>
-				
 				
 			</div>
 			
@@ -92,7 +90,7 @@
 				
 			<br />
 			
-			<div class="row" ng-init="hello">
+			<div class="row">
 				<div class="col-md-6">
 				<div>
 						<label>ASSIGNEE</label>
@@ -102,17 +100,17 @@
 				
 					<div class="input-group">
 					
-						<select class="form-control col-xs-5" name="code_assignee[]" ng-model="dev_item.dev" >
+						<select class="form-control col-xs-5" name="code_assignee[]" ng-model="dev_item.dev" required>
+							
 							<?php foreach($eid as $assignee){
 								echo '<option value="'.$assignee->id.'">'.$assignee->eid.'</option>';
 						}?> </select>
-						
+					
 						<span class="input-group-btn">
 							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeDev()" ng-model="item_dev" ng-disabled="item_dev <=1"><span
 							class="glyphicon glyphicon-remove"></span></button>
 						</span>			
 					</div>
-					
 					
 					<br >
 			
@@ -123,31 +121,36 @@
 				
 				</div>
 
+				<div class="col-md-6">
 				<div>
 					<label>REVIEWER</label>
 				</div>
-				<div class="col-md-6">
+				
 				<fieldset  data-ng-repeat="rev_item in rev_list">
+				
 					<div class="input-group">
-						<select class="form-control" name="code_reviewer[]" ng-model="rev_item.rev">
-							<?php foreach($eid as $assignee){ 
-							echo '<option value="'.$assignee->id.'">'.$assignee->eid.'</option>';
+					
+						<select class="form-control col-xs-5" name="code_reviewer[]" ng-model="rev_item.rev">
+							
+							<?php foreach($eid as $assignee){
+								echo '<option value="'.$assignee->id.'">'.$assignee->eid.'</option>';
 						}?> </select>
-						
+					
 						<span class="input-group-btn">
-							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeRev()"><span
+							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeRev()" ng-model="item_rev" ng-disabled="item_rev <=1"><span
 							class="glyphicon glyphicon-remove"></span></button>
-						</span>
+						</span>			
 					</div>
-					<br />					
+					
+					<br >
 				</fieldset>
-			
+				
 				<br />
-				<a href="#" class="btn btn-success addfields" ng-click="addNewRev()" role="button">Add Reviewer</a>
+				<a href="#" class="btn btn-success addfields" ng-click="addNewRev()" role="button" ng-disabled="">Add Reviewer</a>
 				
 				</div>
 				
-				
+			
 			</div>
 			<hr />
 			<br />
@@ -190,7 +193,7 @@
 						}?> </select>
 					
 						<span class="input-group-btn">
-							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeDev()"><span
+							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeDev()" ng-model="item_dev" ng-disabled="item_dev <=1"><span
 							class="glyphicon glyphicon-remove"></span></button>
 						</span>
 					</div>
@@ -216,7 +219,7 @@
 						}?> </select>
 						
 						<span class="input-group-btn">
-							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeRev()"><span
+							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeRev()" ng-model="item_rev" ng-disabled="item_rev <=1"><span
 							class="glyphicon glyphicon-remove"></span></button>
 						</span>
 					</div>
@@ -268,7 +271,7 @@
 						}?> </select>
 					
 						<span class="input-group-btn">
-							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeDev()"><span
+							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeDev()" ng-model="item_dev" ng-disabled="item_dev <=1"><span
 							class="glyphicon glyphicon-remove"></span></button>
 						</span>
 					</div>
@@ -295,7 +298,7 @@
 						}?> </select>
 						
 						<span class="input-group-btn">
-							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeRev()"><span
+							<button class="btn btn-danger remove" ng-show="$last" ng-click="removeRev()" ng-model="item_rev" ng-disabled="item_rev <=1"><span
 							class="glyphicon glyphicon-remove"></span></button>
 						</span>
 					</div>
@@ -318,7 +321,7 @@
 			
         </div>
         <div class="modal-footer">
-			<?php echo form_submit('submit','Create','class="btn btn-info popover-test"');?>
+			<?php echo form_submit('submit','Create','class="btn btn-info popover-test" ng-disabled="(!code) && (!utp) && (!ute)"');?>
 			<?php echo form_close(); ?>
           <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
         </div>

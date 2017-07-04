@@ -2,93 +2,96 @@ var myApp = angular.module('app', ['ngMessages']);
 
  myApp.controller('CodeCtrl', function($scope) {
 
-	$scope.isEmpty = true;
-  $scope.dev_list = [{dev: $scope.dev}];
-  
-  $scope.rev_list = [{id: 'rev1'}];
+  $scope.dev_list = [{dev : '0'}];
+  $scope.rev_list = [{rev: '0'}];
 
-  
-  $scope.item_dev = $scope.dev_list.length;
+  $scope.item_dev = $scope.dev_list.length; // check button
+  $scope.item_rev = $scope.rev_list.length;
   
   $scope.addNewDev = function() {
-    var newItemNo = $scope.dev_list.length+1;
+	$scope.item_dev = $scope.dev_list.length+1;
     $scope.dev_list.push({'dev':$scope.dev});
-	$scope.item_dev = newItemNo;
   };
     
   $scope.removeDev = function() {
-    var lastItem = $scope.dev_list.length-1;
-	$scope.item_dev = lastItem;
+	$scope.item_dev = $scope.dev_list.length-1;
     $scope.dev_list.splice(lastItem);
   };
   
   $scope.addNewRev = function() {
-    var newItemNo = $scope.rev_list.length+1;
-    $scope.rev_list.push({'id':'rev'+newItemNo});
+	$scope.item_rev = $scope.rev_list.length+1;
+    $scope.rev_list.push({'rev':$scope.rev});
   };
     
   $scope.removeRev = function() {
-    var lastItem = $scope.rev_list.length-1;
+	$scope.item_rev = $scope.rev_list.length-1;
     $scope.rev_list.splice(lastItem);
   };
-  
+    
 });
 
   myApp.controller('UTPCtrl', function($scope) {
 
-  $scope.dev_list = [{id: 'dev1'}];
-  $scope.rev_list = [{id: 'rev1'}];
+  $scope.dev_list = [{dev : '0'}];
+  $scope.rev_list = [{rev: '0'}];
+
+  $scope.item_dev = $scope.dev_list.length; // check button
+  $scope.item_rev = $scope.rev_list.length;
   
   $scope.addNewDev = function() {
-    var newItemNo = $scope.dev_list.length+1;
-    $scope.dev_list.push({'id':'dev'+newItemNo});
+	$scope.item_dev = $scope.dev_list.length+1;
+    $scope.dev_list.push({'dev':$scope.dev});
   };
     
   $scope.removeDev = function() {
-    var lastItem = $scope.dev_list.length-1;
+	$scope.item_dev = $scope.dev_list.length-1;
     $scope.dev_list.splice(lastItem);
   };
   
   $scope.addNewRev = function() {
-    var newItemNo = $scope.rev_list.length+1;
-    $scope.rev_list.push({'id':'rev'+newItemNo});
+	$scope.item_rev = $scope.rev_list.length+1;
+    $scope.rev_list.push({'rev':$scope.rev});
   };
     
   $scope.removeRev = function() {
-    var lastItem = $scope.rev_list.length-1;
+	$scope.item_rev = $scope.rev_list.length-1;
     $scope.rev_list.splice(lastItem);
   };
   
 });
 
-  myApp.controller('UTECtrl', function($scope) {
+myApp.controller('UTECtrl', function($scope) {
 
-  $scope.dev_list = [{id: 'dev1'}];
-  $scope.rev_list = [{id: 'rev1'}];
+  $scope.dev_list = [{dev : '0'}];
+  $scope.rev_list = [{rev: '0'}];
+
+  $scope.item_dev = $scope.dev_list.length; // check button
+  $scope.item_rev = $scope.rev_list.length;
   
   $scope.addNewDev = function() {
-    var newItemNo = $scope.dev_list.length+1;
-    $scope.dev_list.push({'id':'dev'+newItemNo});
+	$scope.item_dev = $scope.dev_list.length+1;
+    $scope.dev_list.push({'dev':$scope.dev});
   };
     
   $scope.removeDev = function() {
-    var lastItem = $scope.dev_list.length-1;
+	$scope.item_dev = $scope.dev_list.length-1;
     $scope.dev_list.splice(lastItem);
   };
   
   $scope.addNewRev = function() {
-    var newItemNo = $scope.rev_list.length+1;
-    $scope.rev_list.push({'id':'rev'+newItemNo});
+	$scope.item_rev = $scope.rev_list.length+1;
+    $scope.rev_list.push({'rev':$scope.rev});
   };
     
   $scope.removeRev = function() {
-    var lastItem = $scope.rev_list.length-1;
+	$scope.item_rev = $scope.rev_list.length-1;
     $scope.rev_list.splice(lastItem);
   };
   
 });
 
 myApp.controller('MainCtrl',function ($scope) {	
+	
 
 	$scope.checkErr = function(startDate,endDate) 
 	{

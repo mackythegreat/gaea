@@ -9,6 +9,19 @@
  });
 </script>
 
+<script type="text/javascript">
+function doconfirm()
+{
+    job=confirm("Are you sure to delete permanently?");
+    if(job!=true)
+    {
+        return false;
+    }
+}
+</script>
+
+
+
 <title>Display All Projects</title>
 
 <body>
@@ -150,7 +163,7 @@
 						
 						<td><a href='<?php echo base_url().'project/delete_project/'.$item->proj_id.'/'.$item->proj_name?>'
 											class="btn btn-danger btn-lg btn-xs" data-toggle="tooltip" 
-											title="Delete <?php echo $item->proj_name?>">
+											title="Delete <?php echo $item->proj_name?>" onClick="return doconfirm();">
 											<span class='glyphicon glyphicon-remove-circle'></span></a></td>
 											
 											

@@ -336,5 +336,13 @@
 			$this->load->view('template/footer');
 		}
 		
+		public function delete_requirements($id=0, $pr_id=0,$req_name){
+			//$this->m_requirements->delete_dev_rev($pr_id);
+			//$this->m_requirements->delete_req_doc($pr_id);
+			//$this->m_requirements->delete_proj_req($id);
+			$this->session->set_flashdata('message',urldecode($req_name).' has been deleted');
+			redirect('requirements/show_project_requirements/'.$id);
+		}
+		
 	}
 ?>

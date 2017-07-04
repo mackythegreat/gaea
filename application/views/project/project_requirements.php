@@ -1,3 +1,14 @@
+<script type="text/javascript">
+function doconfirm()
+{
+    job=confirm("Are you sure to delete permanently?");
+    if(job!=true)
+    {
+        return false;
+    }
+}
+</script>
+
 <title>Project Requirements</title>
 
 <?php $status = array ('' => 'All',
@@ -112,8 +123,9 @@
 				class="btn btn-info btn-lg btn-xs" data-toggle="tooltip">
 				<span class='glyphicon glyphicon-pencil'></span></a></td>
 
-				<td><a href=''
-				class="btn btn-danger btn-lg btn-xs" data-toggle="tooltip">
+				<td><a href='<?php echo base_url().'requirements/delete_requirements/'.$item->p_id.'/'.$item->req_doc_id.'/'.$item->req_name?>'
+				class="btn btn-danger btn-lg btn-xs" data-toggle="tooltip" 
+				title="Delete <?php echo $item->req_name?>" onClick="return doconfirm();" >
 				<span class='glyphicon glyphicon-remove-circle'></span></a></td>
 			</tr>
 		</tbody>
