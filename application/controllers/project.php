@@ -386,7 +386,7 @@
 			$this->m_project->delete_project($p_id);
 			$this->m_project->delete_td($p_id);
 			$this->m_project->delete_ee($p_id);
-			$this->session->set_flashdata('message',$p_name.' has been deleted');
+			$this->session->set_flashdata('message',urldecode($p_name).' has been deleted');
 			redirect('project/display_projects');
 		}
 		
