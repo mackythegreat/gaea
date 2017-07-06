@@ -344,5 +344,13 @@
 			redirect('requirements/show_project_requirements/'.$id);
 		}
 		
+		
+		public function update_requirement($id=0, $pr_id=0,$req_name){
+			
+			$this->load->view('template/header');
+			$this->load->view('project/update_requirement');
+			$this->load->view('template/footer');
+		}
+		
 	}
 ?>

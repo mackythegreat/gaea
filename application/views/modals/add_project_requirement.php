@@ -72,7 +72,7 @@
 			</div>
 			
 			<!--CODE-->
-			<div class="well check-element animate-show-hide" ng-show="code" ng-controller="CodeCtrl">
+			<div class="well check-element animate-show-hide" ng-show="code" ng-controller="CodeCtrl" ng-change="btnassign()">
 			<div class="text-center" style="background-color:#333;color:#fff;">
 				<label> CODE </label>
 				

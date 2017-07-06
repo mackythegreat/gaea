@@ -118,7 +118,7 @@ function doconfirm()
 				<?php $this->view('/modals/view_project_requirement');?>
 				</div></td>
 
-				<td><a href=''
+				<td><a href='<?php echo base_url().'requirements/update_requirement/'.$item->p_id.'/'.$item->req_doc_id.'/'.$item->req_name?>'
 				class="btn btn-info btn-lg btn-xs" data-toggle="tooltip">
 				<span class='glyphicon glyphicon-pencil'></span></a></td>
 
