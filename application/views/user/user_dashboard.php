@@ -242,12 +242,12 @@
 				<div class="tab-content">
 					<div id="mytask" class="tab-pane fade in active">
 						<table class='table'>
-							<?php// if ($proj_req != FALSE){ ?>
+							<?php if ($proj_req != FALSE){ ?>
 							<tbody>
-								<?php //foreach($proj_req as $preq_items):?>
+								<?php foreach($proj_req as $preq_items):?>
 								<tr>
-									<td><?php /* echo $preq_items->proj_name;*/?></td>
-									<td><?php //echo $preq_items->req_name;?></td>
+									<td><?php echo $preq_items->proj_name;?></td>
+									<td><?php echo $preq_items->req_name;?></td>
 									<!-- START - Modal Placeholder -->
 									<td><a href='#' class='update_my_task btn btn-warning btn-lg btn-xs' data-toggle="modal" data-target="#edit_my_task_dshbrd" 
 										data-pr_id='<?php// echo $preq_items->proj_req_id;?>' 
@@ -263,9 +263,9 @@
 									<?php //$this->view('/modals/edit_my_task_dshbrd');?>
 									<!-- END - Modal Placeholder -->
 								</tr>
-								<?php //endforeach;?>
+								<?php endforeach;?>
 								
-							<?php// } else { ?> <hr><?php //echo "Congrats! You don't have an assigned task. Enjoy your day!"; }?>	
+							<?php } else { ?> <hr><?php echo "Congrats! You don't have an assigned task. Enjoy your day!"; }?>	
 							</tbody>	 
 						</table>
 					</div> <!--mytask-->

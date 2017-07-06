@@ -225,6 +225,58 @@
 				return FALSE;
 		}
 		
+		public function get_proj_req_dashbrd($id, $is_lead)
+		{
+			$team_id = '';
+			if($is_lead != 1)
+			{
+				$where = "(pr.status != 'Closed' AND (dr.reviewer_id = $id OR dr.assignee_id = $id))";
+				$this->db->where($where);
+			}
+			
+			{
+			//else
+			//{
+			//	$team_id = $this->session->userdata('team_id');
+			//	
+			//	$this->db->where('pr.status != ', 'Closed');
+			//	$this->db->where('p.capability_id', $team_id);
+			//	
+			//}
+				
+			//$this->db->order_by("pr.proj_req_id", "desc"); 
+			//
+			//$this->db->select('pr.proj_req_id as proj_req_id, p.proj_name as proj_name, r.req_name as req_name, pr.doc_link as doc_link, pr.doc_name as doc_name, pr.rvw_link as rvw_link, pr.rvw_name as rvw_name, rev.eid as reviewer, asgnr.eid as assigner, asgne.eid as assignee, pr.status as status, pr.reviewer_id as rev_id, pr.assignee_id as assign_id', false);
+			//$this->db->from('project_req as pr');
+			//
+			//$this->db->join('project as p', 'pr.proj_id = p.proj_id');
+			//$this->db->join('req_type as r', 'r.req_type_id = pr.req_type_id');
+			//
+			//$this->db->join('user as rev', 'pr.reviewer_id = rev.id');
+			//$this->db->join('user as asgnr', 'pr.assigner_id = asgnr.id');
+			//$this->db->join('user as asgne', 'pr.assignee_id = asgne.id');
+			//$query = $this->db->get();
+			}
+			
+			$this->db->select('pr.p_req_id as p_req_id, p.p_name as proj_name, pr.req_name as req_name, rd.doc_name as doc_name, rd.doc_link as doc_link, rd.rev_name as rev_name, rd.rev_link as rev_link, pr.status as status, rd.rt_id as rt_id');
+			
+			$this->db->from('tb_proj_req as pr');
+			
+			$this->db->join('tb_project as p', 'pr.p_id = p.p_id');
+			
+			$this->db->join('tb_dev_rev as dr', 'pr.p_req_id = dr.p_req_id');
+			$this->db->join('tb_req_doc as rd', 'rd.req_doc_id = dr.req_doc_id');
+			
+			$query = $this->db->get();
+			
+			
+			if($query->num_rows() > 0){
+				return $query;
+			}	
+			else{	
+				return FALSE;
+			}	
+		}
 		
 		/*public function get_all_proj_req($proj_id)
 		{
@@ -254,43 +306,6 @@
 			}			
 		}
 		
-		public function get_proj_req_dashbrd($id, $is_lead)
-		{
-			$team_id = '';
-			if($is_lead != 1)
-			{
-				$where = "(pr.status != 'Closed' AND (pr.reviewer_id = $id OR pr.assignee_id = $id))";
-				$this->db->where($where);
-			}
-			else
-			{
-				$team_id = $this->session->userdata('team_id');
-				
-				$this->db->where('pr.status != ', 'Closed');
-				$this->db->where('p.capability_id', $team_id);
-				
-			}
-				
-			$this->db->order_by("pr.proj_req_id", "desc"); 
-			
-			$this->db->select('pr.proj_req_id as proj_req_id, p.proj_name as proj_name, r.req_name as req_name, pr.doc_link as doc_link, pr.doc_name as doc_name, pr.rvw_link as rvw_link, pr.rvw_name as rvw_name, rev.eid as reviewer, asgnr.eid as assigner, asgne.eid as assignee, pr.status as status, pr.reviewer_id as rev_id, pr.assignee_id as assign_id', false);
-			$this->db->from('project_req as pr');
-			
-			$this->db->join('project as p', 'pr.proj_id = p.proj_id');
-			$this->db->join('req_type as r', 'r.req_type_id = pr.req_type_id');
-			
-			$this->db->join('user as rev', 'pr.reviewer_id = rev.id');
-			$this->db->join('user as asgnr', 'pr.assigner_id = asgnr.id');
-			$this->db->join('user as asgne', 'pr.assignee_id = asgne.id');
-			$query = $this->db->get();
-			
-			if($query->num_rows() > 0){
-				return $query;
-			}	
-			else{	
-				return FALSE;
-			}	
-		}
 		
 		public function get_req_type()
 		{	

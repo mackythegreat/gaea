@@ -111,13 +111,12 @@ function doconfirm()
 					}
 				?>
 				<td <?php echo $class;?> ><?php echo $item->status;?></td>
-				<td><a href=''
-				class="btn btn-success btn-lg btn-xs" data-toggle="tooltip">
-				<span class='glyphicon glyphicon-eye-open'></span></a></td>
-																
-				<td><a href=''
-				class="btn btn-warning btn-lg btn-xs" data-toggle="tooltip">
-				<span class='glyphicon glyphicon-folder-open'></span></a></td>
+				<td><div><a href=''
+				class="btn btn-success btn-lg btn-xs" data-toggle="modal" data-target="#viewPRModal">
+				<span class='glyphicon glyphicon-eye-open'></span></a>
+				
+				<?php $this->view('/modals/view_project_requirement');?>
+				</div></td>
 
 				<td><a href=''
 				class="btn btn-info btn-lg btn-xs" data-toggle="tooltip">

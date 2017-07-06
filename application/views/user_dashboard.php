@@ -223,10 +223,10 @@
 				<h3>Tasks</h3>
 				
 				<?php 
-				$is_hidden = '';
+				/*$is_hidden = '';
 				if ($team_req != TRUE){ 
 					$is_hidden = "hidden";
-				}
+				}*/
 				?>
 				
 				<ul class="nav nav-tabs">
@@ -266,35 +266,7 @@
 						</table>
 					</div> <!--mytask-->
 				
-					<div id="teamtasks" class="tab-pane fade">
-						<table class='table'>
-							<?php if ($team_req != FALSE){ ?>
-							<tbody>
-								<?php foreach($team_req as $preq_items):?>
-								<tr>
-									<td><?php echo $preq_items->proj_name;?></td>
-									<td><?php echo $preq_items->req_name;?></td>
-									<!-- START - Modal Placeholder -->
-									<td><a href='#' class='update_team_task btn btn-warning btn-lg btn-xs' data-toggle="modal" data-target="#edit_team_task_dshbrd" 
-										data-pr_id='<?php echo $preq_items->proj_req_id;?>' 
-										data-doc_name='<?php echo $preq_items->doc_name;?>'
-										data-doc_link='<?php echo $preq_items->doc_link;?>'
-										data-rvw_name='<?php echo $preq_items->rvw_name;?>'
-										data-rvw_link='<?php echo $preq_items->rvw_link;?>'
-										data-status='<?php echo $preq_items->status;?>'
-										data-reviewer='<?php echo $preq_items->reviewer;?>'
-										data-assignee='<?php echo $preq_items->assignee;?>'
-										><span class='glyphicon glyphicon-th-list'></span></a>
-									</td>
-									<?php $this->view('/modals/edit_team_task_dshbrd');?>
-									<!-- END - Modal Placeholder -->
-								</tr>
-								<?php endforeach;?>
-								
-							<?php } else { ?> <hr><?php echo "Congrats! You don't have an assigned task. Enjoy your day!"; }?>	
-							</tbody>	 
-						</table>
-					</div> <!--teamtasks-->
+					
 				</div> <!--tab-content-->
 			</div>
 			

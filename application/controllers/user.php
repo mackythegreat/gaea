@@ -25,7 +25,7 @@
 		
 		public function user_dashboard()
 		{
-			/*if($this->session->userdata('id'))
+			if($this->session->userdata('id'))
 			{
 				$eid = $this->session->userdata('eid');
 				$id = $this->session->userdata('id');
@@ -42,24 +42,24 @@
 				}
 				
 				// get all active team requirements 
-				if($this->session->userdata('user_type') == 'Lead')
-				{
-					$result = $this->m_project->get_proj_req_dashbrd($id, 1);
-					if($result != FALSE){
-						$data['team_req'] = $result->result();
-					}
-					else{
-						$data['team_req'] = $result;
-					}
-				}
-				else
-				{
-					$data['team_req'] = FALSE;
-				}
+				//if($this->session->userdata('user_type') == 'Lead')
+				//{
+				//	$result = $this->m_project->get_proj_req_dashbrd($id, 1);
+				//	if($result != FALSE){
+				//		$data['team_req'] = $result->result();
+				//	}
+				//	else{
+				//		$data['team_req'] = $result;
+				//	}
+				//}
+				//else
+				//{
+				//	$data['team_req'] = FALSE;
+				//}
 				
-				$capabiltity_search = $this->session->userdata('team_id');
-				$project_results = $this->m_project->get_all_projects('','',$capabiltity_search, '');
-				$data['projects'] = $project_results->result();
+				//$capabiltity_search = $this->session->userdata('team_id');
+				//$project_results = $this->m_project->get_all_projects('','',$capabiltity_search, '');
+				//$data['projects'] = $project_results->result();
 				
 				// Retrieve TO-DO List 
 				if($row = $this->m_user->get_all_todo($eid))
@@ -73,21 +73,17 @@
 				
 				// Retrieve technical design 
 				
-				$td = $this->m_project->get_all_proj_req('');
-				$data['td'] = $td->result();
+				//$td = $this->m_project->get_all_proj_req('');
+				//$data['td'] = $td->result();
 				
-				$this->load->view('header',$data);
-				$this->load->view('user_dashboard',$data);
-				$this->load->view('footer',$data);
+				$this->load->view('template/header', $data);
+				$this->load->view('user/user_dashboard', $data);
+				$this->load->view('template/footer', $data);
 			}
 			else
 			{
 				header('Location: '.site_url('login/authenticate'));
-			}*/
-			
-			$this->load->view('template/header');
-			$this->load->view('user/user_dashboard');
-			$this->load->view('template/footer');
+			}
 			
 		} 
 				
